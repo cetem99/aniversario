@@ -1,45 +1,32 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request
 import mysql.connector
-
 
 app = Flask(__name__)
 
+def criar_aniversariante(nome):
+    conexao = mysql.connector.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='aniversario'
+    )
+    cursor = conexao.cursor()
 
-# Configurar a conexão com o banco de dados MySQL
-db_config = {
-   'host': 'localhost',
-   'user': 'root',  # seu usuário MySQL
-   'password': 'sua_senha',  # sua senha MySQL
-   'database': 'aniversariante_db'
-}
+    comando = f'INSERT INTO aniversariantes (nome) VALUES ("{nome}")' 
+    cursor.execute(comando)
+    conexao.commit()
 
+    cursor.close()
+    conexao.close()
 
-def get_db_connection():
-   conn = mysql.connector.connect(**db_config)
-   return conn
-
-
-@app.route('/aniversariantes', methods=['POST'])
-def create_aniversariante():
-   data = request.get_json()
-   nome = data.get('nome')
-
-
-   if not nome:
-       return jsonify({'message': 'Nome é obrigatório'}), 400
-
-
-   conn = get_db_connection()
-   cursor = conn.cursor()
-   query = 'INSERT INTO aniversariante (nome) VALUES (%s)'
-   cursor.execute(query, (nome,))
-   conn.commit()
-   cursor.close()
-   conn.close()
-
-
-   return jsonify({'message': 'Aniversariante criado com sucesso', 'nome': nome}), 201
-
+@app.route('/aniversariante', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        criar_aniversariante(nome)
+        return "Aniversariante criado com sucesso!"
+    else:
+        return render_template('formulario.html')
 
 if __name__ == '__main__':
-   app.run(port=5000,debug=True)
+    app.run(debug=True)
