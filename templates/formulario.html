@@ -31,7 +31,9 @@
         }
 
         input[type="text"],
-        input[type="date"] {
+        input[type="date"],
+        input[type="email"],
+        input[type="tel"] {
             width: calc(100% - 22px);
             padding: 10px;
             border: 1px solid #cccccc;
@@ -63,6 +65,12 @@
         
         <label for="data_aniversario">Data de Aniversário:</label>
         <input type="date" id="data_aniversario" name="data_aniversario" required><br><br>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="telefone">Telefone:</label>
+        <input type="tel" id="telefone" name="telefone" required><br><br>
         
         <input type="submit" value="Criar">
     </form>
