@@ -7,7 +7,7 @@ def criar_aniversariante(nome, data_aniversario, email, telefone):
     conexao = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='12345678',
+        password='',
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
@@ -22,7 +22,7 @@ def deletar_aniversariante(nome):
     conexao = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='12345678',
+        password='',
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
@@ -36,7 +36,7 @@ def listar_aniversariantes():
     conexao = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='12345678',
+        password='',
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
