@@ -110,3 +110,26 @@ button.delete {
 button.delete:hover {
     color: darkred;
 }
+
+/* Estilos para esconder/mostrar a lista */
+.hidden {
+    display: none;
+}
+
+.toggle-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.toggle-btn:hover {
+    background-color: #45a049;
+}
+
+.aniversariantes-list {
+    margin-top: 10px;
+}
