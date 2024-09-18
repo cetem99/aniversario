@@ -7,42 +7,58 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/estilo.css') }}">
 </head>
 <body>
-    <div class="background">
-        <div class="container">
-            <h1>Criar Aniversariante</h1>
-            <form method="POST">
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" required>
+    <div class="container">
+        <h1>Criar Aniversariante</h1>
+        <form method="POST">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
 
-                <label for="data_aniversario">Data de Aniversário:</label>
-                <input type="date" id="data_aniversario" name="data_aniversario" required>
+            <label for="data_aniversario">Data de Aniversário:</label>
+            <input type="date" id="data_aniversario" name="data_aniversario" required>
 
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" required>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required>
 
-                <label for="telefone">Telefone:</label>
-                <input type="tel" id="telefone" name="telefone" required>
+            <label for="telefone">Telefone:</label>
+            <input type="tel" id="telefone" name="telefone" required>
 
-                <input type="submit" name="criar" value="Criar">
-            </form>
-            
-            <h2>Lista de Aniversariantes</h2>
-            <ul>
-                {% if aniversariantes %}
-                    {% for aniversariante in aniversariantes %}
-                    <li>
-                        {{ aniversariante[0] }} - {{ aniversariante[1] }} <!-- Exibindo nome e data de aniversário -->
-                        <form method="POST" style="display:inline;">
-                            <input type="hidden" name="nome_deletar" value="{{ aniversariante[0] }}">
-                            <button type="submit" name="deletar" class="delete">✖</button>
-                        </form>
-                    </li>
-                    {% endfor %}
-                {% else %}
-                    <li>Nenhum aniversariante cadastrado.</li>
-                {% endif %}
-            </ul>
-        </div>
+            <input type="submit" name="criar" value="Criar">
+        </form>
+        
+        <h2>Lista de Aniversariantes</h2>
+        
+        <button class="toggle-btn" onclick="toggleList()">Mostrar Aniversariantes</button>
+
+        <ul class="aniversariantes-list hidden" id="aniversariantes-list">
+            {% if aniversariantes %}
+                {% for aniversariante in aniversariantes %}
+                <li>
+                    <span class="name">{{ aniversariante[0] }} - {{ aniversariante[1] }}</span>
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="nome_deletar" value="{{ aniversariante[0] }}">
+                        <button type="submit" name="deletar" class="delete">✖</button>
+                    </form>
+                </li>
+                {% endfor %}
+            {% else %}
+                <li>Nenhum aniversariante cadastrado.</li>
+            {% endif %}
+        </ul>
     </div>
+
+    <script>
+        function toggleList() {
+            var list = document.getElementById('aniversariantes-list');
+            var btn = document.querySelector('.toggle-btn');
+
+            if (list.classList.contains('hidden')) {
+                list.classList.remove('hidden');
+                btn.textContent = 'Esconder Aniversariantes';
+            } else {
+                list.classList.add('hidden');
+                btn.textContent = 'Mostrar Aniversariantes';
+            }
+        }
+    </script>
 </body>
 </html>
