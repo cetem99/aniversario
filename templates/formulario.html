@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Aniversariante</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/estilo.css') }}">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
     <div class="background">
@@ -28,36 +28,19 @@
             
             <h2>Lista de Aniversariantes</h2>
             <ul>
-                {% for aniversariante in aniversariantes %}
-                <li>
-                    {{ aniversariante[0] }}
-                    <form method="POST" style="display:inline;">
-                        <input type="hidden" name="nome_deletar" value="{{ aniversariante[0] }}">
-                        <button type="submit" name="deletar" class="delete">✖</button>
-                    </form>
-                </li>
-                {% endfor %}
-                <li>
-                    Maria Oliveira
-                    <form method="POST" style="display:inline;">
-                        <input type="hidden" name="nome_deletar" value="Maria Oliveira">
-                        <button type="submit" name="deletar" class="delete">✖</button>
-                    </form>
-                </li>
-                <li>
-                    Pedro Santos
-                    <form method="POST" style="display:inline;">
-                        <input type="hidden" name="nome_deletar" value="Pedro Santos">
-                        <button type="submit" name="deletar" class="delete">✖</button>
-                    </form>
-                </li>
-                <li>
-                    Ana Costa
-                    <form method="POST" style="display:inline;">
-                        <input type="hidden" name="nome_deletar" value="Ana Costa">
-                        <button type="submit" name="deletar" class="delete">✖</button>
-                    </form>
-                </li>
+                {% if aniversariantes %}
+                    {% for aniversariante in aniversariantes %}
+                    <li>
+                        {{ aniversariante[0] }} - {{ aniversariante[1] }} <!-- Exibindo nome e data de aniversário -->
+                        <form method="POST" style="display:inline;">
+                            <input type="hidden" name="nome_deletar" value="{{ aniversariante[0] }}">
+                            <button type="submit" name="deletar" class="delete">✖</button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <li>Nenhum aniversariante cadastrado.</li>
+                {% endif %}
             </ul>
         </div>
     </div>
