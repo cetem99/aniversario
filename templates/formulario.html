@@ -46,19 +46,7 @@
         </ul>
     </div>
 
-    <script>
-        function toggleList() {
-            var list = document.getElementById('aniversariantes-list');
-            var btn = document.querySelector('.toggle-btn');
-
-            if (list.classList.contains('hidden')) {
-                list.classList.remove('hidden');
-                btn.textContent = 'Esconder Aniversariantes';
-            } else {
-                list.classList.add('hidden');
-                btn.textContent = 'Mostrar Aniversariantes';
-            }
-        }
-    </script>
+    <!-- Carregando o script externo -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
