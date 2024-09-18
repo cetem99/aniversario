@@ -20,7 +20,7 @@
             <input type="email" id="email" name="email" required>
 
             <label for="telefone">Telefone:</label>
-            <input type="tel" id="telefone" name="telefone" required>
+            <input type="tel" id="telefone" name="telefone" maxlength="15" placeholder="(XX) XXXXX-XXXX" oninput="formatarTelefone(this)" required>
 
             <input type="submit" name="criar" value="Criar">
         </form>
@@ -33,7 +33,7 @@
             {% if aniversariantes %}
                 {% for aniversariante in aniversariantes %}
                 <li>
-                    <span class="name">{{ aniversariante[0] }} - {{ aniversariante[1] }}</span>
+                    <span class="name">{{ aniversariante[0] }}  {{ aniversariante[1] }}</span>
                     <form method="POST" style="display:inline;">
                         <input type="hidden" name="nome_deletar" value="{{ aniversariante[0] }}">
                         <button type="submit" name="deletar" class="delete">✖</button>
