@@ -28,13 +28,15 @@
             
             <h2>Lista de Aniversariantes</h2>
             <ul>
+                {% for aniversariante in aniversariantes %}
                 <li>
-                    João da Silva
+                    {{ aniversariante[0] }}
                     <form method="POST" style="display:inline;">
-                        <input type="hidden" name="nome_deletar" value="João da Silva">
+                        <input type="hidden" name="nome_deletar" value="{{ aniversariante[0] }}">
                         <button type="submit" name="deletar" class="delete">✖</button>
                     </form>
                 </li>
+                {% endfor %}
                 <li>
                     Maria Oliveira
                     <form method="POST" style="display:inline;">
