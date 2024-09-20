@@ -1,6 +1,6 @@
 let isEditing = false; // Variável para controlar o estado de edição
 
-document.querySelector('.btn-edit').addEventListener('click', function() {
+document.querySelector('.btn-edit').addEventListener('click', function () {
     const nameField = document.querySelector('.namef');
     const dateField = document.getElementById('data-nascimento');
 
@@ -16,7 +16,7 @@ document.querySelector('.btn-edit').addEventListener('click', function() {
 
         // Transformar a data de nascimento (h2) em input
         const inputDate = document.createElement('input');
-        inputDate.type = 'text';  // Pode alterar para 'date' se preferir
+        inputDate.type = 'date';  // Pode alterar para 'date' se preferir
         inputDate.value = dateField.textContent;
         inputDate.classList.add('data-nascimento-input');
         inputDate.setAttribute('id', 'input-date');
@@ -58,3 +58,14 @@ document.querySelector('.btn-edit').addEventListener('click', function() {
         isEditing = false;
     }
 });
+
+// Função para exibir/ocultar info-adicional
+document.getElementById("open").addEventListener("click", function (event) {
+    const infoAdicional = document.getElementById("info-adicional");
+    if (infoAdicional.classList.contains('show')) {
+        infoAdicional.classList.remove('show');
+    } else {
+        infoAdicional.classList.add('show');
+    }
+});
+
