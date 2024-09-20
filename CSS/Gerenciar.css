@@ -1,0 +1,249 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    text-decoration: none;
+}
+
+main {
+    background-color: #051728;
+    width: 100vw;
+    height: 100vh;
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Ajustado de 'top' para 'flex-start' */
+}
+
+.cont {
+    background-color: #123456;
+    border-radius: 25px;
+    min-height: 200px;
+    padding: 40px 80px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Ajustado de 'top' para 'flex-start' */
+    max-width: 1300px;
+}
+
+.per {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Ajustado de 'top' para 'flex-start' */
+}
+
+.pessoa {
+    display: block;
+    background-color: #051728;
+    border-radius: 25px;
+    min-width: 850px;
+    min-height: 200px;
+    padding: 20px;
+    color: #e3dbdb;
+    text-transform: capitalize;
+    
+}
+
+.pessoa input, textarea {
+    font-size: 1.3rem;
+    border: solid #d1d0d0 1px;
+    outline: none;
+    background: #e3dbdb;
+    border-radius: 10px;
+    color: #000; /* Alterado para preto, pois o fundo é branco */
+    padding: 10px; /* Aumentado para maior espaçamento */
+    
+    width: calc(100% - 20px); /* Para garantir que o input tenha o tamanho correto */
+}
+
+.pessoa .per input{
+    margin: 10px;
+}
+
+.img-container {
+    display: inline-block;
+    position: relative;
+    padding: 5px;
+    border-radius: 50%;
+    background: linear-gradient(121.576deg, #CCCCCC, #666666);
+    margin-right: 25px;
+    margin-left: 25px;
+}
+
+.img {
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    background-image: url('https://i1.sndcdn.com/artworks-x5THoewWyRqzR6HH-V3B7Uw-t500x500.jpg');
+    background-size: cover; /* Ajustado para 'cover' */
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 2px;
+    position: relative;
+    z-index: 1;
+}
+
+.namef {
+    padding-left: 8px;
+}
+
+.data {
+    display: flex;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.calen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #123456;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    margin-right: 25px;
+}
+
+.but {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    flex-direction: column;
+}
+
+ion-icon {
+    --ionicon-stroke-width: 30px;
+    color: #e3dbdb;
+    font-size: 55px;
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+button {
+    display: flex;
+    width: 150px;
+    height: 50px;
+    border-radius: 15px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 5px;
+    background-color: #e3dbdb; /* Certifique-se de ter um fundo visível */
+    color: #000; /* Certifique-se de ter uma cor de texto visível */
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.4s ease, color 0.3s ease;
+}
+button:focus {
+    outline: 2px solid #000; /* Adiciona um contorno visível ao foco */
+}
+button:hover{
+    color: #e3dbdb; /* Certifique-se de ter um fundo visível */
+    background-color: #123456; /* Certifique-se de ter uma cor de texto visível */
+    border: #e3dbdb 1px solid;
+}
+
+button:hover ion-icon {
+    color: #e3dbdb; /* Muda a cor do ícone ao passar o mouse */
+}
+
+button ion-icon {
+    --ionicon-stroke-width: 30px;
+    color: #000000;
+    font-size: 45px;
+}
+
+button p {
+    font-size: 24px;
+}
+
+.extra-info {
+    max-height: 0; /* Inicialmente, altura zero (escondido) */
+    opacity: 0; /* Inicialmente, invisível */
+    overflow: hidden; /* Oculta o conteúdo que estiver além do limite */
+    
+}
+
+
+
+.info-adicional {
+    max-height: 0; /* Altura inicial */
+    opacity: 0; /* Inicialmente invisível */
+    overflow: hidden; /* Esconde conteúdo além da altura */
+    flex-direction: column;
+    margin-top: 30px;
+    gap: 10px;
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.info-adicional.show {
+    max-height: 500px; /* Altura máxima quando visível */
+    opacity: 1; /* Totalmente visível */
+}
+
+
+.inf {
+    display: flex;
+    flex-direction: column;/* Alinhamento vertical para label e input */
+    margin-bottom: 10px;
+}
+
+label{
+    margin-bottom: 15px; /* Adiciona espaço entre o label e o input */
+}
+
+textarea{
+    resize: none;
+}
+
+.inf input, textarea{
+    width: 580px;
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 20px;
+    }
+
+    .cont {
+        padding: 20px;
+    }
+
+    .pessoa {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto; /* Ajustado para auto */
+        width: 100%;
+    }
+
+    .dados {
+        text-align: left;
+    }
+
+    .but {
+        width: 100%;
+        align-items: flex-start;
+        padding-top: 15px;
+    }
+
+    button {
+        width: 100%;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    button ion-icon {
+        padding-left: 15px;
+    }
+}
+
+
