@@ -69,3 +69,12 @@ document.getElementById("open").addEventListener("click", function (event) {
     }
 });
 
+const increaseButton = document.getElementById('open');
+const imgContainer = document.querySelector('.img-container');
+const img = document.querySelector('.img');
+
+increaseButton.addEventListener('click', () => {
+    imgContainer.classList.toggle('increase');
+    img.classList.toggle('increase');
+});
+
