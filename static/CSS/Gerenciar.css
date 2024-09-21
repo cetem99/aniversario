@@ -1,3 +1,4 @@
+/* Estilos globais */
 * {
     box-sizing: border-box;
     padding: 0;
@@ -13,7 +14,7 @@ main {
     padding: 50px;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Ajustado de 'top' para 'flex-start' */
+    align-items: flex-start;
 }
 
 .cont {
@@ -23,14 +24,14 @@ main {
     padding: 40px 80px;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Ajustado de 'top' para 'flex-start' */
+    align-items: flex-start;
     max-width: 1300px;
 }
 
 .per {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; /* Ajustado de 'top' para 'flex-start' */
+    align-items: flex-start;
 }
 
 .pessoa {
@@ -42,25 +43,40 @@ main {
     padding: 20px;
     color: #e3dbdb;
     text-transform: capitalize;
-    
 }
 
-.pessoa input, textarea {
+/* Estilo para os inputs, textarea e select */
+.pessoa input, 
+.pessoa textarea, 
+.pessoa select, 
+.pessoa option {
     font-size: 1.3rem;
     border: solid #d1d0d0 1px;
     outline: none;
     background: #e3dbdb;
     border-radius: 10px;
-    color: #000; /* Alterado para preto, pois o fundo é branco */
-    padding: 10px; /* Aumentado para maior espaçamento */
-    
-    width: calc(100% - 20px); /* Para garantir que o input tenha o tamanho correto */
+    color: #000;
+    padding: 10px;
+    width: 100%; /* Isso ajusta a largura para 100% do contêiner */
+    max-width: 580px; /* Limita a largura máxima */
+    box-shadow: none; /* Remove qualquer sombra padrão que o select pode ter */
 }
 
-.pessoa .per input{
+
+
+.pessoa select {
+    appearance: none; /* Remove a aparência padrão do select */
+    -webkit-appearance: none; /* Para navegadores webkit */
+    -moz-appearance: none; /* Para navegadores firefox */
+    height: 50px; /* Ajusta a altura */
+}
+
+.pessoa .per input, 
+.pessoa .per select {
     margin: 10px;
 }
 
+/* Outros estilos */
 .img-container {
     display: inline-block;
     position: relative;
@@ -69,6 +85,7 @@ main {
     background: linear-gradient(121.576deg, #CCCCCC, #666666);
     margin-right: 25px;
     margin-left: 25px;
+    transition: transform 0.5s ease;
 }
 
 .img {
@@ -82,6 +99,12 @@ main {
     margin: 2px;
     position: relative;
     z-index: 1;
+    transition: transform 0.5s ease;
+}
+
+.increase {
+    width: 200px;
+    height: 200px;
 }
 
 .namef {
@@ -124,6 +147,7 @@ h2 {
     text-transform: capitalize;
 }
 
+/* Estilos dos botões */
 button {
     display: flex;
     width: 150px;
@@ -133,23 +157,25 @@ button {
     align-items: center;
     padding: 10px;
     margin: 5px;
-    background-color: #e3dbdb; /* Certifique-se de ter um fundo visível */
-    color: #000; /* Certifique-se de ter uma cor de texto visível */
+    background-color: #e3dbdb;
+    color: #000;
     cursor: pointer;
     border: none;
     transition: background-color 0.4s ease, color 0.3s ease;
 }
+
 button:focus {
-    outline: 2px solid #000; /* Adiciona um contorno visível ao foco */
+    outline: 2px solid #000;
 }
-button:hover{
-    color: #e3dbdb; /* Certifique-se de ter um fundo visível */
-    background-color: #123456; /* Certifique-se de ter uma cor de texto visível */
+
+button:hover {
+    color: #e3dbdb;
+    background-color: #123456;
     border: #e3dbdb 1px solid;
 }
 
 button:hover ion-icon {
-    color: #e3dbdb; /* Muda a cor do ícone ao passar o mouse */
+    color: #e3dbdb;
 }
 
 button ion-icon {
@@ -163,18 +189,15 @@ button p {
 }
 
 .extra-info {
-    max-height: 0; /* Inicialmente, altura zero (escondido) */
-    opacity: 0; /* Inicialmente, invisível */
-    overflow: hidden; /* Oculta o conteúdo que estiver além do limite */
-    
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
 }
 
-
-
 .info-adicional {
-    max-height: 0; /* Altura inicial */
-    opacity: 0; /* Inicialmente invisível */
-    overflow: hidden; /* Esconde conteúdo além da altura */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
     flex-direction: column;
     margin-top: 30px;
     gap: 10px;
@@ -182,29 +205,35 @@ button p {
 }
 
 .info-adicional.show {
-    max-height: 500px; /* Altura máxima quando visível */
-    opacity: 1; /* Totalmente visível */
+    max-height: 500px;
+    opacity: 1;
 }
-
 
 .inf {
     display: flex;
-    flex-direction: column;/* Alinhamento vertical para label e input */
-    margin-bottom: 10px;
+    flex-direction: column;
+    margin-bottom: 20px;
 }
 
-label{
-    margin-bottom: 15px; /* Adiciona espaço entre o label e o input */
+label {
+    margin-bottom: 15px;
 }
 
-textarea{
+textarea {
     resize: none;
 }
 
-.inf input, textarea{
+.inf input, 
+.inf textarea {
     width: 580px;
 }
 
+.apaga button{
+    background-color: #890000;
+    color: #d1d0d0;
+}
+
+/* Responsividade */
 @media (max-width: 768px) {
     main {
         padding: 20px;
@@ -217,7 +246,7 @@ textarea{
     .pessoa {
         flex-direction: column;
         align-items: flex-start;
-        height: auto; /* Ajustado para auto */
+        height: auto;
         width: 100%;
     }
 
@@ -245,5 +274,3 @@ textarea{
         padding-left: 15px;
     }
 }
-
-
