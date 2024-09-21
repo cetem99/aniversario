@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Aniversariante</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/estilo.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Criar Aniversariante</h1>
+        <form method="POST">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="data_aniversario">Data de Aniversário:</label>
+            <input type="date" id="data_aniversario" name="data_aniversario" required>
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="telefone">Telefone:</label>
+            <input type="tel" id="telefone" name="telefone" maxlength="15" placeholder="(XX) XXXXX-XXXX" oninput="formatarTelefone(this)" required>
+
+            <input type="submit" name="criar" value="Criar">
+        </form>
+        
+        <h2>Lista de Aniversariantes</h2>
+        
+        <button class="toggle-btn" onclick="toggleList()">Mostrar Aniversariantes</button>
+
+        <ul class="aniversariantes-list hidden" id="aniversariantes-list">
+            {% if aniversariantes %}
+                {% for aniversariante in aniversariantes %}
+                <li>
+                    <span class="name">{{ aniversariante[0] }}  {{ aniversariante[1] }}</span>
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="nome_deletar" value="{{ aniversariante[0] }}">
+                        <button type="submit" name="deletar" class="delete">✖</button>
+                    </form>
+                </li>
+                {% endfor %}
+            {% else %}
+                <li>Nenhum aniversariante cadastrado.</li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Carregando o script externo -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
