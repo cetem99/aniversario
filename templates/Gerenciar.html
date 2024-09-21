@@ -48,10 +48,15 @@
                         <div class="inf">
                             <label for="mensagem">felicitações</label>
                             <textarea id="sel" rows="4" cols="1"></textarea>
+                            
                         </div>
                         <div class="inf">
                             <label for="mensagem">Notificação </label>
-                            <input type="t" id="mensagem">
+                            <select id="escolhas" name="escolhas">
+                                <option value="opcao1">1 Semana</option>
+                                <option value="opcao2">2 Semanas</option>
+                                <option value="opcao3">1 mês</option>
+                            </select>
                         </div>
                         <div class="inf">
                             <label for="mensagem">Numero</label>
@@ -61,8 +66,12 @@
                             <label for="mensagem">email</label>
                             <input type="text" id="mensagem">
                         </div>
+                        <div class="apaga">
+                            <button>Apagar</button>
+                        </div>
                     </div>
                 </form>
+                
             </div>
         </div>
     </main>
