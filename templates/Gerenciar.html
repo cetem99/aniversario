@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/Gerenciar.css"> <!-- Link para o CSS externo -->
+    <link rel="stylesheet" href="static/CSS/Gerenciar.css"> <!-- Link para o CSS externo -->
     <title>Happy day</title>
 </head>
 
@@ -13,22 +13,22 @@
         <div class="cont">
             <!-- Bloco pessoa -->
             <div class="pessoa">
-                <form action="">
+                <form action="/" method="POST"> <!-- Método POST para enviar dados ao Flask -->
                     <div class="per">
                         <div style="display: flex;">
                             <div class="img-container">
                                 <div class="img"></div>
                             </div>
                             <div class="dados">
-                                <label>nome</label>
-                                <h2 class="namef">Rafa Morrea</h2>
+                                <label>Nome</label>
+                                <input type="text" name="nome" placeholder="Nome do aniversariante" required>
                                 <div class="data">
                                     <div class="calen">
                                         <ion-icon name="calendar-outline"></ion-icon>
                                     </div>
                                     <div>
-                                        <label for="">data</label>
-                                        <h2 id="data-nascimento">20/05/2304</h2>
+                                        <label for="data_aniversario">Data de Aniversário</label>
+                                        <input type="date" name="data_aniversario" required>
                                     </div>
                                 </div>
                             </div>
@@ -39,45 +39,47 @@
                                 <ion-icon name="pencil-outline"></ion-icon>
                             </button>
                             <button type="button" id="view-btn">
-                                <p>ver</p>
+                                <p>Ver</p>
                                 <ion-icon name="eye-outline"></ion-icon>
                             </button>
                         </div>
                     </div>
-                    <div id="info-adicional" class="info-adicional" > <!-- Adicionamos ID e display none -->
+                    <div id="info-adicional" class="info-adicional"> <!-- Informações adicionais -->
                         <div class="inf">
-                            <label for="mensagem">felicitações</label>
-                            <textarea id="sel" rows="4" cols="1"></textarea>
-                            
+                            <label for="mensagem">Felicitações</label>
+                            <textarea id="sel" name="felicitacoes" rows="4" cols="50"></textarea>
                         </div>
                         <div class="inf">
-                            <label for="mensagem">Notificação </label>
+                            <label for="escolhas">Notificação</label>
                             <select id="escolhas" name="escolhas">
-                                <option value="opcao1">1 Semana</option>
-                                <option value="opcao2">2 Semanas</option>
-                                <option value="opcao3">1 mês</option>
+                                <option value="1 Semana">1 Semana</option>
+                                <option value="2 Semanas">2 Semanas</option>
+                                <option value="1 mês">1 Mês</option>
                             </select>
                         </div>
                         <div class="inf">
-                            <label for="mensagem">Numero</label>
-                            <input type="tel" id="mensagem">
+                            <label for="telefone">Número</label>
+                            <input type="tel" id="telefone" name="telefone" placeholder="Telefone" required>
                         </div>
                         <div class="inf">
-                            <label for="mensagem">email</label>
-                            <input type="text" id="mensagem">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Email" required>
                         </div>
                         <div class="apaga">
-                            <button>Apagar</button>
+                            <button type="submit" name="deletar">Apagar</button> <!-- Botão para deletar aniversariante -->
                         </div>
                     </div>
+                    <div class="salvar">
+                        <button type="submit" name="criar">Salvar</button> <!-- Botão para criar aniversariante -->
+                    </div>
                 </form>
-                
             </div>
         </div>
     </main>
+
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="../js/Gerenciar.js"></script> <!-- Link para o arquivo JS externo -->
+    <script src="static/js/Gerenciar.js"></script> <!-- Link para o arquivo JS externo -->
 </body>
 
 </html>

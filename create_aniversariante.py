@@ -40,7 +40,7 @@ def listar_aniversariantes():
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
-    comando = 'SELECT nome FROM aniversariantes'
+    comando = 'SELECT nome, data_aniversario, email, telefone FROM aniversariantes'
     cursor.execute(comando)
     resultados = cursor.fetchall()
     cursor.close()
@@ -58,11 +58,12 @@ def index():
             criar_aniversariante(nome, data_aniversario, email, telefone)
             return "Aniversariante criado com sucesso!"
         elif 'deletar' in request.form:
-            nome = request.form['nome_deletar']
+            nome = request.form['nome']
             deletar_aniversariante(nome)
             return "Aniversariante deletado com sucesso!"
+    
     aniversariantes = listar_aniversariantes()
-    return render_template('formulario.html', aniversariantes=aniversariantes)
+    return render_template('Gerenciar.html', aniversariantes=aniversariantes)
 
 if __name__ == '__main__':
     app.run(debug=True)
