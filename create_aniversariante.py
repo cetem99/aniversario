@@ -3,7 +3,7 @@ import mysql.connector
 
 app = Flask(__name__)
 
-def criar_aniversariante(nome, data_aniversario, email, telefone):
+def criar_aniversariante(nome, data_aniversario, email, telefone, notificacao, felicitacao):
     conexao = mysql.connector.connect(
         host='localhost',
         user='root',
@@ -11,8 +11,8 @@ def criar_aniversariante(nome, data_aniversario, email, telefone):
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
-    comando = 'INSERT INTO aniversariantes (nome, data_aniversario, email, telefone) VALUES (%s, %s, %s, %s)'
-    valores = (nome, data_aniversario, email, telefone)
+    comando = 'INSERT INTO aniversariantes (nome, data_aniversario, email, telefone, notificacao, felicitacao) VALUES (%s, %s, %s, %s, %s, %s)'
+    valores = (nome, data_aniversario, email, telefone, notificacao, felicitacao)
     cursor.execute(comando, valores)
     conexao.commit()
     cursor.close()
@@ -40,7 +40,7 @@ def listar_aniversariantes():
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
-    comando = 'SELECT nome, data_aniversario, email, telefone FROM aniversariantes'
+    comando = 'SELECT nome, data_aniversario, email, telefone, notificacao, felicitacao FROM aniversariantes'
     cursor.execute(comando)
     resultados = cursor.fetchall()
     cursor.close()
@@ -55,15 +55,17 @@ def index():
             data_aniversario = request.form['data_aniversario']
             email = request.form['email']
             telefone = request.form['telefone']
-            criar_aniversariante(nome, data_aniversario, email, telefone)
+            notificacao = request.form['escolhas']  # Captura o valor do select "escolhas"
+            felicitacao = request.form['felicitacoes']  # Captura a mensagem de felicitações
+            criar_aniversariante(nome, data_aniversario, email, telefone, notificacao, felicitacao)
             return "Aniversariante criado com sucesso!"
         elif 'deletar' in request.form:
-            nome = request.form['nome']
+            nome = request.form['nome_deletar']
             deletar_aniversariante(nome)
             return "Aniversariante deletado com sucesso!"
     
     aniversariantes = listar_aniversariantes()
-    return render_template('Gerenciar.html', aniversariantes=aniversariantes)
+    return render_template('gerenciar.html', aniversariantes=aniversariantes)
 
 if __name__ == '__main__':
     app.run(debug=True)
