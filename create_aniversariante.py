@@ -47,6 +47,26 @@ def listar_aniversariantes():
     conexao.close()
     return resultados
 
+def editar_aniversariante(nome_atual, novo_nome, nova_data_aniversario, novo_email, novo_telefone, nova_notificacao, nova_felicitacao):
+    conexao = mysql.connector.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='lembrar_aniversarios'
+    )
+    cursor = conexao.cursor()
+    comando = '''
+        UPDATE aniversariantes 
+        SET nome = %s, data_aniversario = %s, email = %s, telefone = %s, notificacao = %s, felicitacao = %s 
+        WHERE nome = %s
+    '''
+    valores = (novo_nome, nova_data_aniversario, novo_email, novo_telefone, nova_notificacao, nova_felicitacao, nome_atual)
+    cursor.execute(comando, valores)
+    conexao.commit()
+    cursor.close()
+    conexao.close()
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -63,9 +83,22 @@ def index():
             nome = request.form['nome_deletar']
             deletar_aniversariante(nome)
             return "Aniversariante deletado com sucesso!"
+        
+        elif 'editar' in request.form:
+            # Código para editar um aniversariante
+            nome_atual = request.form['nome_atual']
+            novo_nome = request.form['nome']
+            nova_data_aniversario = request.form['data_aniversario']
+            novo_email = request.form['email']
+            novo_telefone = request.form['telefone']
+            nova_notificacao = request.form['escolhas']
+            nova_felicitacao = request.form['felicitacoes']
+            editar_aniversariante(nome_atual, novo_nome, nova_data_aniversario, novo_email, novo_telefone, nova_notificacao, nova_felicitacao)
+            return "Aniversariante editado com sucesso!"
     
     aniversariantes = listar_aniversariantes()
-    return render_template('gerenciar.html', aniversariantes=aniversariantes)
+    return render_template('Gerenciar.html', aniversariantes=aniversariantes)
+        
 
 if __name__ == '__main__':
     app.run(debug=True)

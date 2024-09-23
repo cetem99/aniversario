@@ -1,76 +1,127 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/CSS/Gerenciar.css"> <!-- Link para o CSS externo -->
-    <title>Happy day</title>
+    <title>Gerenciar Aniversariantes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Gerenciar.css') }}">
 </head>
 
 <body>
     <main>
         <div class="cont">
-            <!-- Bloco pessoa -->
             <div class="pessoa">
-                <form action="/" method="POST"> <!-- Método POST para enviar dados ao Flask -->
-                    <div class="per">
-                        <div style="display: flex;">
-                            <div class="img-container">
-                                <div class="img"></div>
-                            </div>
-                            <div class="dados">
-                                <label>Nome</label>
-                                <input type="text" id="nome" name="nome" required>
-                                <div class="data">
-                                    <div class="calen">
-                                        <ion-icon name="calendar-outline"></ion-icon>
-                                    </div>
-                                    <div>
-                                        <label for="data_aniversario">Data de Nascimento</label>
-                                        <input type="date" id="data_aniversario" name="data_aniversario" required>
-                                    </div>
-                                </div>
+                <form method="POST" action="/" enctype="multipart/form-data" class="per">
+                    <div class="inf">
+                        <label for="nome">Nome do aniversariante</label>
+                        <input type="text" name="nome" placeholder="Nome do aniversariante" required>
+
+                        <label for="data_aniversario">Data de Aniversário</label>
+                        <input type="date" name="data_aniversario" required>
+
+                        <label for="email">Email</label>
+                        <input type="email" name="email" placeholder="Email" required>
+
+                        <label for="telefone">Telefone</label>
+                        <input type="tel" name="telefone" placeholder="Telefone" required>
+
+                        <label for="escolhas">Notificação</label>
+                        <select name="escolhas" required>
+                            <option value="1 Semana">1 Semana</option>
+                            <option value="1 Dia">1 Dia</option>
+                        </select>
+
+                        <label for="felicitacoes">Felitações</label>
+                        <textarea name="felicitacoes" placeholder="Digite sua mensagem"></textarea>
+
+                        <label for="foto">Foto do aniversariante</label>
+                        <input type="file" name="foto" accept="image/*" required>
+                    </div>
+
+                    <div class="salvar">
+                        <button type="submit" name="criar">
+                            <p>Salvar</p>
+                            <ion-icon name="checkmark-outline"></ion-icon>
+                        </button>
+                    </div>
+                </form>
+
+                <hr>
+
+                <h2>Lista de Aniversariantes</h2>
+                <div class="aniversariantes-lista">
+                    {% for aniversariante in aniversariantes %}
+                    <div class="aniversariante-item pessoa">
+                        <div class="per">
+                            <img src="{{ url_for('static', filename='uploads/' ~ aniversariante[6]) }}" alt="Foto do aniversariante" class="img">
+                            <p><strong>Nome:</strong> <span class="namef">{{ aniversariante[0] }}</span></p>
+                            <p><strong>Data de Aniversário:</strong> <span id="data-nascimento">{{ aniversariante[1] }}</span></p>
+                            <p><strong>Email:</strong> {{ aniversariante[2] }}</p>
+                            <p><strong>Telefone:</strong> {{ aniversariante[3] }}</p>
+                            <p><strong>Notificação:</strong> {{ aniversariante[4] }}</p>
+                            <p><strong>Felitações:</strong> {{ aniversariante[5] }}</p>
+
+                            <div class="but">
+                                <button class="btn-edit" type="button">
+                                    <p>Editar</p>
+                                    <ion-icon name="pencil-outline"></ion-icon>
+                                </button>
+
+                                <form method="POST" action="/" class="apaga">
+                                    <input type="hidden" name="nome_deletar" value="{{ aniversariante[0] }}">
+                                    <button type="submit" name="deletar">
+                                        <p>Deletar</p>
+                                        <ion-icon name="trash-outline"></ion-icon>
+                                    </button>
+                                </form>
                             </div>
                         </div>
-                        <div class="but">
-                            <button class="btn-edit" type="submit" name="criar">
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Formulário de Edição -->
+                <div id="edit-form" style="display:none;">
+                    <h2>Editar Aniversariante</h2>
+                    <form method="POST" action="/" enctype="multipart/form-data">
+                        <input type="hidden" name="nome_atual" id="nome_atual">
+                        
+                        <label for="edit_nome">Nome do aniversariante</label>
+                        <input type="text" name="nome" id="edit_nome" required>
+
+                        <label for="edit_data_aniversario">Data de Aniversário</label>
+                        <input type="date" name="data_aniversario" id="edit_data_aniversario" required>
+
+                        <label for="edit_email">Email</label>
+                        <input type="email" name="email" id="edit_email" required>
+
+                        <label for="edit_telefone">Telefone</label>
+                        <input type="tel" name="telefone" id="edit_telefone" required>
+
+                        <label for="edit_escolhas">Notificação</label>
+                        <select name="escolhas" id="edit_escolhas" required>
+                            <option value="1 Semana">1 Semana</option>
+                            <option value="1 Dia">1 Dia</option>
+                        </select>
+
+                        <label for="edit_felicitacoes">Felitações</label>
+                        <textarea name="felicitacoes" id="edit_felicitacoes" required></textarea>
+
+                        <div class="salvar">
+                            <button type="submit" name="editar">
                                 <p>Salvar</p>
                                 <ion-icon name="checkmark-outline"></ion-icon>
                             </button>
                         </div>
-                    </div>
+                    </form>
+                </div>
 
-                    <div id="info-adicional" class="info-adicional">
-                        <div class="inf">
-                            <label for="felicitacoes">Felicitações</label>
-                            <textarea id="felicitacoes" name="felicitacoes" rows="4" cols="50"></textarea>
-                        </div>
-                        <div class="inf">
-                            <label for="escolhas">Notificação</label>
-                            <select id="escolhas" name="escolhas">
-                                <option value="1 Semana">1 Semana</option>
-                                <option value="2 Semanas">2 Semanas</option>
-                                <option value="1 Mês">1 Mês</option>
-                            </select>
-                        </div>
-                        <div class="inf">
-                            <label for="telefone">Número</label>
-                            <input type="tel" id="telefone" name="telefone" required>
-                        </div>
-                        <div class="inf">
-                            <label for="email">E-mail</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
     </main>
 
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="static/js/Gerenciar.js"></script> <!-- Link para o arquivo JS externo -->
+    <script src="{{ url_for('static', filename='js/Gerenciar.js') }}"></script>
 </body>
 
 </html>

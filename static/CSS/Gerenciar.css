@@ -57,18 +57,16 @@ main {
     border-radius: 10px;
     color: #000;
     padding: 10px;
-    width: 100%; /* Isso ajusta a largura para 100% do contêiner */
-    max-width: 580px; /* Limita a largura máxima */
-    box-shadow: none; /* Remove qualquer sombra padrão que o select pode ter */
+    width: 100%;
+    max-width: 580px;
+    box-shadow: none;
 }
 
-
-
 .pessoa select {
-    appearance: none; /* Remove a aparência padrão do select */
-    -webkit-appearance: none; /* Para navegadores webkit */
-    -moz-appearance: none; /* Para navegadores firefox */
-    height: 50px; /* Ajusta a altura */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: 50px;
 }
 
 .pessoa .per input, 
@@ -93,7 +91,7 @@ main {
     height: 125px;
     border-radius: 50%;
     background-image: url('https://i1.sndcdn.com/artworks-x5THoewWyRqzR6HH-V3B7Uw-t500x500.jpg');
-    background-size: cover; /* Ajustado para 'cover' */
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     margin: 2px;
@@ -228,49 +226,14 @@ textarea {
     width: 580px;
 }
 
-.apaga button{
+.apaga button {
     background-color: #890000;
     color: #d1d0d0;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    main {
-        padding: 20px;
-    }
-
-    .cont {
-        padding: 20px;
-    }
-
-    .pessoa {
-        flex-direction: column;
-        align-items: flex-start;
-        height: auto;
-        width: 100%;
-    }
-
-    .dados {
-        text-align: left;
-    }
-
-    .but {
-        width: 100%;
-        align-items: flex-start;
-        padding-top: 15px;
-    }
-
-    button {
-        width: 100%;
-        justify-content: center;
-        font-size: 18px;
-    }
-
-    h2 {
-        font-size: 24px;
-    }
-
-    button ion-icon {
-        padding-left: 15px;
-    }
+.salvar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
