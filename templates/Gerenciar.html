@@ -10,10 +10,11 @@
 
 <body>
     <main>
-        <div class="cont">
-            <div class="pessoa">
-                <form method="POST" action="/" enctype="multipart/form-data" class="per">
-                    <div class="inf">
+        <div class="container">
+            <div class="form-container">
+                <form method="POST" action="/" enctype="multipart/form-data" class="birthday-form">
+                    <h2>Criar Aniversariante</h2>
+                    <div class="form-group">
                         <label for="nome">Nome do aniversariante</label>
                         <input type="text" name="nome" placeholder="Nome do aniversariante" required>
 
@@ -24,7 +25,7 @@
                         <input type="email" name="email" placeholder="Email" required>
 
                         <label for="telefone">Telefone</label>
-                        <input type="tel" name="telefone" placeholder="Telefone" required>
+                        <input type="tel" id="telefone" name="telefone" maxlength="15" placeholder="(XX) XXXXX-XXXX" oninput="formatarTelefone(this)" required>
 
                         <label for="escolhas">Notificação</label>
                         <select name="escolhas" required>
@@ -39,10 +40,10 @@
                         <input type="file" name="foto" accept="image/*" required>
                     </div>
 
-                    <div class="salvar">
-                        <button type="submit" name="criar">
-                            <p>Salvar</p>
+                    <div class="button-group">
+                        <button type="submit" name="criar" class="btn-save">
                             <ion-icon name="checkmark-outline"></ion-icon>
+                            <span>Salvar</span>
                         </button>
                     </div>
                 </form>
@@ -50,73 +51,38 @@
                 <hr>
 
                 <h2>Lista de Aniversariantes</h2>
-                <div class="aniversariantes-lista">
+                <div class="birthday-list">
                     {% for aniversariante in aniversariantes %}
-                    <div class="aniversariante-item pessoa">
-                        <div class="per">
-                            <img src="{{ url_for('static', filename='uploads/' ~ aniversariante[6]) }}" alt="Foto do aniversariante" class="img">
-                            <p><strong>Nome:</strong> <span class="namef">{{ aniversariante[0] }}</span></p>
-                            <p><strong>Data de Aniversário:</strong> <span id="data-nascimento">{{ aniversariante[1] }}</span></p>
+                    <div class="birthday-item">
+                        <div class="image-wrapper">
+                            <img src="{{ url_for('static', filename='uploads/' ~ aniversariante[6]) }}" alt="Foto do aniversariante">
+                        </div>
+                        <div class="birthday-info">
+                            <p><strong>Nome:</strong> {{ aniversariante[0] }}</p>
+                            <p><strong>Data de Aniversário:</strong> {{ aniversariante[1] }}</p>
                             <p><strong>Email:</strong> {{ aniversariante[2] }}</p>
                             <p><strong>Telefone:</strong> {{ aniversariante[3] }}</p>
                             <p><strong>Notificação:</strong> {{ aniversariante[4] }}</p>
                             <p><strong>Felitações:</strong> {{ aniversariante[5] }}</p>
+                        </div>
 
-                            <div class="but">
-                                <button class="btn-edit" type="button">
-                                    <p>Editar</p>
-                                    <ion-icon name="pencil-outline"></ion-icon>
+                        <div class="action-buttons">
+                            <button class="btn-edit">
+                                <ion-icon name="pencil-outline"></ion-icon>
+                                <span>Editar</span>
+                            </button>
+
+                            <form method="POST" action="/" class="form-delete">
+                                <input type="hidden" name="nome_deletar" value="{{ aniversariante[0] }}">
+                                <button type="submit" class="btn-delete">
+                                    <ion-icon name="trash-outline"></ion-icon>
+                                    <span>Deletar</span>
                                 </button>
-
-                                <form method="POST" action="/" class="apaga">
-                                    <input type="hidden" name="nome_deletar" value="{{ aniversariante[0] }}">
-                                    <button type="submit" name="deletar">
-                                        <p>Deletar</p>
-                                        <ion-icon name="trash-outline"></ion-icon>
-                                    </button>
-                                </form>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
-
-                <!-- Formulário de Edição -->
-                <div id="edit-form" style="display:none;">
-                    <h2>Editar Aniversariante</h2>
-                    <form method="POST" action="/" enctype="multipart/form-data">
-                        <input type="hidden" name="nome_atual" id="nome_atual">
-                        
-                        <label for="edit_nome">Nome do aniversariante</label>
-                        <input type="text" name="nome" id="edit_nome" required>
-
-                        <label for="edit_data_aniversario">Data de Aniversário</label>
-                        <input type="date" name="data_aniversario" id="edit_data_aniversario" required>
-
-                        <label for="edit_email">Email</label>
-                        <input type="email" name="email" id="edit_email" required>
-
-                        <label for="edit_telefone">Telefone</label>
-                        <input type="tel" name="telefone" id="edit_telefone" required>
-
-                        <label for="edit_escolhas">Notificação</label>
-                        <select name="escolhas" id="edit_escolhas" required>
-                            <option value="1 Semana">1 Semana</option>
-                            <option value="1 Dia">1 Dia</option>
-                        </select>
-
-                        <label for="edit_felicitacoes">Felitações</label>
-                        <textarea name="felicitacoes" id="edit_felicitacoes" required></textarea>
-
-                        <div class="salvar">
-                            <button type="submit" name="editar">
-                                <p>Salvar</p>
-                                <ion-icon name="checkmark-outline"></ion-icon>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
             </div>
         </div>
     </main>
