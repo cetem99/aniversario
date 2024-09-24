@@ -25,19 +25,23 @@
                         <input type="email" name="email" placeholder="Email" required>
 
                         <label for="telefone">Telefone</label>
-                        <input type="tel" id="telefone" name="telefone" maxlength="15" placeholder="(XX) XXXXX-XXXX" oninput="formatarTelefone(this)" required>
+                        <input type="tel" name="telefone" maxlength="15" placeholder="(XX) XXXXX-XXXX" required oninput="formatPhone(this)">
 
                         <label for="escolhas">Notificação</label>
                         <select name="escolhas" required>
+                            <option value="1 mes">1 mês</option>
+                            <option value="3 Semanas">3 Semanas</option>
+                            <option value="2 Semanas">2 Semanas</option>
                             <option value="1 Semana">1 Semana</option>
                             <option value="1 Dia">1 Dia</option>
                         </select>
 
-                        <label for="felicitacoes">Felitações</label>
+                        <label for="felicitacoes">Felicitações</label>
                         <textarea name="felicitacoes" placeholder="Digite sua mensagem"></textarea>
 
-                        <label for="foto">Foto do aniversariante</label>
-                        <input type="file" name="foto" accept="image/*" required>
+                        <!-- Campo para upload de foto (opcional) -->
+                        <label for="foto">Foto do aniversariante (opcional)</label>
+                        <input type="file" name="foto" accept="image/*">
                     </div>
 
                     <div class="button-group">
@@ -45,6 +49,7 @@
                             <ion-icon name="checkmark-outline"></ion-icon>
                             <span>Salvar</span>
                         </button>
+                        <button type="button" class="btn-cancel" onclick="window.location.href='/'">Cancelar</button>
                     </div>
                 </form>
 
@@ -54,25 +59,28 @@
                 <div class="birthday-list">
                     {% for aniversariante in aniversariantes %}
                     <div class="birthday-item">
-                        <div class="image-wrapper">
-                            <img src="{{ url_for('static', filename='uploads/' ~ aniversariante[6]) }}" alt="Foto do aniversariante">
-                        </div>
                         <div class="birthday-info">
                             <p><strong>Nome:</strong> {{ aniversariante[0] }}</p>
                             <p><strong>Data de Aniversário:</strong> {{ aniversariante[1] }}</p>
                             <p><strong>Email:</strong> {{ aniversariante[2] }}</p>
                             <p><strong>Telefone:</strong> {{ aniversariante[3] }}</p>
                             <p><strong>Notificação:</strong> {{ aniversariante[4] }}</p>
-                            <p><strong>Felitações:</strong> {{ aniversariante[5] }}</p>
+                            <p><strong>Felicitações:</strong> {{ aniversariante[5] }}</p>
+                            {% if aniversariante[6] %} <!-- Se a foto existir -->
+                                <img src="{{ aniversariante[6] }}" alt="Foto de {{ aniversariante[0] }}" class="birthday-photo">
+                            {% endif %}
                         </div>
 
                         <div class="action-buttons">
-                            <button class="btn-edit">
-                                <ion-icon name="pencil-outline"></ion-icon>
-                                <span>Editar</span>
-                            </button>
+                            <form method="POST" action="/editar" class="form-edit">
+                                <input type="hidden" name="nome_atual" value="{{ aniversariante[0] }}">
+                                <button type="submit" class="btn-edit">
+                                    <ion-icon name="pencil-outline"></ion-icon>
+                                    <span>Editar</span>
+                                </button>
+                            </form>
 
-                            <form method="POST" action="/" class="form-delete">
+                            <form method="POST" action="/" class="form-delete" onsubmit="return confirmDelete();">
                                 <input type="hidden" name="nome_deletar" value="{{ aniversariante[0] }}">
                                 <button type="submit" class="btn-delete">
                                     <ion-icon name="trash-outline"></ion-icon>
@@ -86,8 +94,26 @@
             </div>
         </div>
     </main>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
+    <script>
+        function confirmDelete() {
+            return confirm("Tem certeza que deseja deletar este aniversariante?");
+        }
 
-    <script src="{{ url_for('static', filename='js/Gerenciar.js') }}"></script>
+        function formatPhone(input) {
+            let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+            if (value.length > 10) {
+                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXXX-XXXX
+            } else if (value.length > 6) {
+                value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXX-XXXX
+            } else if (value.length > 2) {
+                value = value.replace(/(\d{2})(\d{4})/, '($1) $2'); // Formato (XX) XXXX
+            } else if (value.length <= 2) {
+                value = value.replace(/(\d{2})/, '($1'); // Formato (XX
+            }
+            input.value = value; // Atualiza o campo de entrada com a formatação
+        }
+    </script>
 </body>
 
 </html>
