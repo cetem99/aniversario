@@ -1,0 +1,128 @@
+/* Resetando estilos globais */
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    text-decoration: none;
+    outline: none;
+}
+
+/* Estilo do corpo da página */
+body {
+    background-color: #051728;
+    color: #e3dbdb;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    padding: 20px;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* Container principal */
+.container {
+    background-color: #123456;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 1000px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Formulários */
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.edit-form h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    font-size: 1rem;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #d1d0d0;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #123456;
+    box-shadow: 0 0 0 3px rgba(18, 52, 86, 0.2);
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+/* Botões */
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e3dbdb;
+    color: #051728;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #0b2950;
+    color: #e3dbdb;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+}
+/* Estilo para o botão de cancelar */
+.btn-cancel {
+    background-color: #f9f9f9; /* Cor de fundo */
+    color: #051728; /* Cor do texto */
+    border: none; /* Sem borda */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 12px 20px; /* Espaçamento interno */
+    font-size: 1rem; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor em forma de mão ao passar o mouse */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra do botão */
+}
+
+/* Efeito hover para o botão de cancelar */
+.btn-cancel:hover {
+    background-color: #e3dbdb; /* Cor de fundo ao passar o mouse */
+    color: #051728; /* Cor do texto ao passar o mouse */
+}
