@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/editar.css') }}">
+    <title>Editar Aniversariante</title>
+</head>
+<body>
+    <div class="container">
+        <form class="edit-form" method="POST" action="/salvar_edicao">
+            <h2>Editar Aniversariante</h2>
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" value="{{ aniversariante[0] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="data_aniversario">Data de Aniversário</label>
+                <input type="date" id="data_aniversario" name="data_aniversario" value="{{ aniversariante[1] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="{{ aniversariante[2] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone</label>
+                <input type="tel" id="telefone" name="telefone" value="{{ aniversariante[3] }}" maxlength="15" placeholder="(XX) XXXXX-XXXX" required oninput="formatPhone(this)">
+            </div>
+            <div class="form-group">
+                <label for="escolhas">Notificação</label>
+                <select id="escolhas" name="escolhas" required>
+                    <option value="1 mes" {% if aniversariante[4] == '1 mes' %}selected{% endif %}>1 mês</option>
+                    <option value="3 Semanas" {% if aniversariante[4] == '3 Semanas' %}selected{% endif %}>3 Semanas</option>
+                    <option value="2 Semanas" {% if aniversariante[4] == '2 Semanas' %}selected{% endif %}>2 Semanas</option>
+                    <option value="1 Semana" {% if aniversariante[4] == '1 Semana' %}selected{% endif %}>1 Semana</option>
+                    <option value="1 Dia" {% if aniversariante[4] == '1 Dia' %}selected{% endif %}>1 Dia</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="felicitacoes">Felicitação</label>
+                <textarea id="felicitacoes" name="felicitacoes" required>{{ aniversariante[5] }}</textarea>
+            </div>
+            <input type="hidden" name="nome_atual" value="{{ aniversariante[0] }}">
+            <div class="button-group">
+                <button type="submit">Salvar</button>
+                <button type="button" class="btn-cancel" onclick="window.location.href='/'">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function formatPhone(input) {
+            let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+            if (value.length > 10) {
+                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXXX-XXXX
+            } else if (value.length > 6) {
+                value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXX-XXXX
+            } else if (value.length > 2) {
+                value = value.replace(/(\d{2})(\d{4})/, '($1) $2'); // Formato (XX) XXXX
+            } else if (value.length <= 2) {
+                value = value.replace(/(\d{2})/, '($1'); // Formato (XX
+            }
+            input.value = value; // Atualiza o campo de entrada com a formatação
+        }
+    </script>
+</body>
+</html>
