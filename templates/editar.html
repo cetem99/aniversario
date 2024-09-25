@@ -29,11 +29,12 @@
             <div class="form-group">
                 <label for="escolhas">Notificação</label>
                 <select id="escolhas" name="escolhas" required>
-                    <option value="1 mes" {% if aniversariante[4] == '1 mes' %}selected{% endif %}>1 mês</option>
-                    <option value="3 Semanas" {% if aniversariante[4] == '3 Semanas' %}selected{% endif %}>3 Semanas</option>
-                    <option value="2 Semanas" {% if aniversariante[4] == '2 Semanas' %}selected{% endif %}>2 Semanas</option>
-                    <option value="1 Semana" {% if aniversariante[4] == '1 Semana' %}selected{% endif %}>1 Semana</option>
-                    <option value="1 Dia" {% if aniversariante[4] == '1 Dia' %}selected{% endif %}>1 Dia</option>
+                    <option value="1 mes" {% if aniversariante[4] == '1 mes' %}selected{% endif %}>1 mês antes</option>
+                    <option value="3 Semanas" {% if aniversariante[4] == '3 Semanas' %}selected{% endif %}>3 Semanas antes</option>
+                    <option value="2 Semanas" {% if aniversariante[4] == '2 Semanas' %}selected{% endif %}>2 Semanas antes</option>
+                    <option value="1 Semana" {% if aniversariante[4] == '1 Semana' %}selected{% endif %}>1 Semana antes</option>
+                    <option value="1 Dia" {% if aniversariante[4] == '1 Dia' %}selected{% endif %}>1 Dia antes</option>
+                    <option value="No Dia" {% if aniversariante[4] == 'No dia' %}selected{% endif %}>Somente no dia do aniversário</option>
                 </select>
             </div>
             <div class="form-group">
