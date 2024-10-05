@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/editar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Gerenciar.css') }}">
     <title>Editar Aniversariante</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="margin-top: 15px;">
         <form class="edit-form" method="POST" action="/salvar_edicao">
             <h2>Editar Aniversariante</h2>
             <div class="form-group">
@@ -41,28 +41,63 @@
                 <label for="felicitacoes">Felicitação</label>
                 <textarea id="felicitacoes" name="felicitacoes" required>{{ aniversariante[5] }}</textarea>
             </div>
-            <input type="hidden" name="nome_atual" value="{{ aniversariante[0] }}">
-            <div class="button-group">
-                <button type="submit">Salvar</button>
-                <button type="button" class="btn-cancel" onclick="window.location.href='/'">Cancelar</button>
+            <div class="container">
+                <input type="file" id="file-input" accept="image/png, image/jpeg" onchange="preview()">
+                <label for="file-input">
+                    <i class="fas fa-upload"></i> &nbsp; Escolher uma Foto
+                </label>
+                <p id="num-of-files">Nenhum arquivo escolhido</p>
+                <div id="images"></div>
             </div>
+            <input type="hidden" name="nome_atual" value="{{ aniversariante[0] }}">
+            <div class="submit">
+                <button type="submit" style="margin-right: 20px;">Salvar</button>
+                <button type="button" class="btn-cancel" onclick="window.location.href='/'" >Cancelar</button>
+            </div>
+           
         </form>
     </div>
 
-    <script>
-        function formatPhone(input) {
-            let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-            if (value.length > 10) {
-                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXXX-XXXX
-            } else if (value.length > 6) {
-                value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXX-XXXX
-            } else if (value.length > 2) {
-                value = value.replace(/(\d{2})(\d{4})/, '($1) $2'); // Formato (XX) XXXX
-            } else if (value.length <= 2) {
-                value = value.replace(/(\d{2})/, '($1'); // Formato (XX
-            }
-            input.value = value; // Atualiza o campo de entrada com a formatação
-        }
-    </script>
+    
 </body>
+<script>
+    function formatPhone(input) {
+        let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+        if (value.length > 10) {
+            value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXXX-XXXX
+        } else if (value.length > 6) {
+            value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXX-XXXX
+        } else if (value.length > 2) {
+            value = value.replace(/(\d{2})(\d{4})/, '($1) $2'); // Formato (XX) XXXX
+        } else if (value.length <= 2) {
+            value = value.replace(/(\d{2})/, '($1'); // Formato (XX
+        }
+        input.value = value; // Atualiza o campo de entrada com a formatação
+    }
+
+    const form = document.querySelector('.novo');
+    const button = document.querySelector('.butnovo');
+    const fileInput = document.getElementById("file-input");
+    function preview() {
+        const imageContainer = document.getElementById("images");
+        const numOfFiles = document.getElementById("num-of-files");
+        imageContainer.innerHTML = "";
+        numOfFiles.textContent = `${fileInput.files.length} Files Selected`;
+
+        for (i of fileInput.files) {
+            let reader = new FileReader();
+            let figure = document.createElement("figure");
+            let figCap = document.createElement("figcaption");
+            figCap.innerText = i.name;
+            figure.appendChild(figCap);
+            reader.onload = () => {
+                let img = document.createElement("img");
+                img.setAttribute("src", reader.result);
+                figure.insertBefore(img, figCap);
+            }
+            imageContainer.appendChild(figure);
+            reader.readAsDataURL(i);
+        }
+    }
+</script>
 </html>

@@ -8,6 +8,23 @@
     outline: none;
 }
 
+.new {
+    float: right;
+    margin-bottom: 20px;
+}
+
+.fromnew{
+    display: none;
+    background-color: #123456;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1000; /* Mantém sobreposto */
+    margin: 50px;
+    padding: 25px;
+    border-radius: 25px;
+}
+
 /* Estilo do corpo da página */
 body {
     background-color: #051728;
@@ -15,10 +32,32 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 100vh;
+    height: 140vh;
     padding: 20px;
     margin: 0;
     overflow-x: hidden;
+}
+
+
+.novo {
+    background-color: #051728; /* Fundo semi-transparente */
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 1000px;
+    width: 100%;
+    z-index: 9999; /* Garante que ele fique acima de todos os outros elementos */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra para destaque */
+    display: none; /* Começa oculto */
+    margin-bottom: 35px;
+    opacity: 0; /* Começa invisível */
+    transform: translateY(-20px); /* Move para cima um pouco */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Transição suave */
+    visibility: visible;
+}
+
+.novo.show {
+    opacity: 1; /* Torna visível */
+    transform: translateY(0); /* Move para a posição original */
 }
 
 /* Container principal */
@@ -31,7 +70,42 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin: auto;
     overflow: hidden;
+    margin-bottom: 15px;
+    min-width: 650px;
 }
+
+.container > p {
+    text-align: center;
+    margin: 20px 0 30px 0;
+}
+
+#images {
+    width: 90%;
+    position: relative;
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+
+figure {
+    width: 45%;
+    display: flex; /* Ativa o flexbox */
+    flex-direction: column; /* Alinha os itens na vertical */
+    align-items: center; /* Centraliza horizontalmente */
+}
+
+img {
+    width: 100%;
+    display: block; /* Remove o espaço em branco abaixo da imagem */
+}
+
+figcaption {
+    text-align: center;
+    font-size: 2.4vmin;
+    margin-top: 0.5vmin;
+}
+
 
 /* Formulários */
 .birthday-form {
@@ -40,8 +114,8 @@ body {
     gap: 20px;
 }
 
-.birthday-form h2 {
-    font-size: 1.8rem;
+h2 {
+    font-size: 2rem;
     margin-bottom: 15px;
 }
 
@@ -64,6 +138,30 @@ body {
     transition: all 0.3s ease;
 }
 
+input[type="file"]{
+    
+    display: none;
+}
+
+.container > label{
+    display: block;
+    position: relative;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 18px;
+    text-align: center;
+    width: 300px;
+    padding: 18px 0;
+    margin: auto;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.container > label:hover{
+   background-color: #aaaaaa;
+    
+}
+
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
@@ -77,33 +175,71 @@ textarea {
 }
 
 /* Botões */
+
+
 .button-group, .action-buttons {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    align-items: flex-end; /* Alinha à direita */
+    gap: 10px; /* Espaçamento entre os botões */
 }
 
+.action-buttons > div {
+    flex: 1; /* Permite que cada div ocupe a mesma quantidade de espaço */
+}
+
+.action-buttons button {
+    width: 100px; /* Largura fixa para todos os botões */
+    padding: 12px; /* Padding uniforme */
+    font-size: 1rem; /* Tamanho de fonte uniforme */
+    border-radius: 8px; /* Bordas arredondadas */
+    transition: background-color 0.3s ease; /* Efeito de transição */
+}
+
+/* Estilo específico para o botão de editar */
+.btn-edit {
+    background-color: #ffffff; /* Cor de fundo para o botão de editar */
+    color: #051728; /* Cor do texto */
+}
+
+/* Estilo específico para o botão de deletar */
+.btn-delete {
+    background-color: #890000; /* Cor de fundo para o botão de deletar */
+    color: #ffffff; /* Cor do texto */
+}
+
+/* Efeitos de hover para ambos os botões */
+.btn-edit:hover {
+    background-color: #aaaaaa; /* Efeito hover para o botão de editar */
+}
+
+.btn-delete:hover {
+    background-color: #650000; /* Efeito hover para o botão de deletar */
+}
+
+.sp{
+    margin-bottom: 10px;
+}
 button {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #e3dbdb;
+    background-color: #fff;
     color: #051728;
     border: none;
     border-radius: 8px;
-    padding: 12px 20px;
+    padding: 12px 18px;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-button ion-icon {
-    margin-right: 10px;
-}
+
 
 button:hover {
-    background-color: #0b2950;
-    color: #e3dbdb;
+    background-color: #aaaaaa;
+    
 }
 
 .btn-delete {
@@ -130,6 +266,8 @@ button:hover {
     justify-content: space-between;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
+    max-width: 1000px;
+    width: 100%; /* Mantém a largura do item da lista */
 }
 
 .birthday-item:hover {
@@ -146,10 +284,34 @@ button:hover {
 .birthday-info {
     flex: 1;
     margin-left: 20px;
+    margin-right: 50px;
 }
 
 .birthday-info p {
     margin-bottom: 8px;
+}
+
+.ajuste {
+    position: absolute; /* Usa posicionamento absoluto para ajustar o botão */
+    right: 50px; /* Posiciona o botão a 20px da borda direita */
+    top: 40px;   /* Posiciona o botão a 20px do topo da página */
+}
+
+.voltar, .btn-cancel:hover{
+    background-color: #890000;
+    color: #ffffff;
+}
+
+img {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.submit{
+    display: flex;
+    
 }
 
 /* Responsividade */
@@ -165,5 +327,7 @@ button:hover {
 
     .container {
         padding: 20px;
+        min-width: 0%;
     }
 }
+
