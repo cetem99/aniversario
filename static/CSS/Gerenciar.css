@@ -8,21 +8,73 @@
     outline: none;
 }
 
+/* Header - Barra de navegação */
+header {
+    background-color: #1E2A38;
+    padding: 15px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #FFF;
+    z-index: 1000;
+    height: 80px; /* Defina a altura do header */
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar .logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.navbar .logo h2 {
+    color: #FFF;
+    margin: 0;
+    font-size: 24px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-info .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    font-size: 18px;
+    color: #FFF;
+}
+
+/* Ajuste do botão 'Novo Aniversariante' */
 .new {
+    background-color: #ffffff;
+    color: #000;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
     float: right;
     margin-bottom: 20px;
 }
 
-.fromnew{
-    display: none;
-    background-color: #123456;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 1000; /* Mantém sobreposto */
-    margin: 50px;
-    padding: 25px;
-    border-radius: 25px;
+.new:hover {
+    background-color: #aaa;
 }
 
 /* Estilo do corpo da página */
@@ -32,32 +84,31 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 140vh;
-    padding: 20px;
+    padding-top: 80px; /* O mesmo valor da altura do header */
+    padding: 100px;
     margin: 0;
     overflow-x: hidden;
 }
 
-
 .novo {
-    background-color: #051728; /* Fundo semi-transparente */
+    background-color: #051728;
     border-radius: 15px;
     padding: 40px;
     max-width: 1000px;
     width: 100%;
-    z-index: 9999; /* Garante que ele fique acima de todos os outros elementos */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra para destaque */
-    display: none; /* Começa oculto */
+    z-index: 9999;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    display: none;
     margin-bottom: 35px;
-    opacity: 0; /* Começa invisível */
-    transform: translateY(-20px); /* Move para cima um pouco */
-    transition: opacity 0.5s ease, transform 0.5s ease; /* Transição suave */
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
     visibility: visible;
 }
 
 .novo.show {
-    opacity: 1; /* Torna visível */
-    transform: translateY(0); /* Move para a posição original */
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Container principal */
@@ -65,7 +116,7 @@ body {
     background-color: #123456;
     border-radius: 15px;
     padding: 40px;
-    max-width: 1000px;
+    max-width: 900px;
     width: 100%;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin: auto;
@@ -90,14 +141,14 @@ body {
 
 figure {
     width: 45%;
-    display: flex; /* Ativa o flexbox */
-    flex-direction: column; /* Alinha os itens na vertical */
-    align-items: center; /* Centraliza horizontalmente */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 img {
     width: 100%;
-    display: block; /* Remove o espaço em branco abaixo da imagem */
+    display: block;
 }
 
 figcaption {
@@ -105,7 +156,6 @@ figcaption {
     font-size: 2.4vmin;
     margin-top: 0.5vmin;
 }
-
 
 /* Formulários */
 .birthday-form {
@@ -138,12 +188,11 @@ h2 {
     transition: all 0.3s ease;
 }
 
-input[type="file"]{
-    
+input[type="file"] {
     display: none;
 }
 
-.container > label{
+.container > label {
     display: block;
     position: relative;
     background-color: #ffffff;
@@ -157,9 +206,8 @@ input[type="file"]{
     cursor: pointer;
 }
 
-.container > label:hover{
-   background-color: #aaaaaa;
-    
+.container > label:hover {
+    background-color: #aaaaaa;
 }
 
 .form-group input:focus,
@@ -175,51 +223,47 @@ textarea {
 }
 
 /* Botões */
-
-
 .button-group, .action-buttons {
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Alinha à direita */
-    gap: 10px; /* Espaçamento entre os botões */
+    align-items: flex-end;
+    gap: 10px;
 }
 
 .action-buttons > div {
-    flex: 1; /* Permite que cada div ocupe a mesma quantidade de espaço */
+    flex: 1;
 }
 
 .action-buttons button {
-    width: 100px; /* Largura fixa para todos os botões */
-    padding: 12px; /* Padding uniforme */
-    font-size: 1rem; /* Tamanho de fonte uniforme */
-    border-radius: 8px; /* Bordas arredondadas */
-    transition: background-color 0.3s ease; /* Efeito de transição */
+    width: 100px;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
 }
 
-/* Estilo específico para o botão de editar */
 .btn-edit {
-    background-color: #ffffff; /* Cor de fundo para o botão de editar */
-    color: #051728; /* Cor do texto */
+    background-color: #ffffff;
+    color: #051728;
 }
 
-/* Estilo específico para o botão de deletar */
 .btn-delete {
-    background-color: #890000; /* Cor de fundo para o botão de deletar */
-    color: #ffffff; /* Cor do texto */
+    background-color: #890000;
+    color: #ffffff;
 }
 
-/* Efeitos de hover para ambos os botões */
 .btn-edit:hover {
-    background-color: #aaaaaa; /* Efeito hover para o botão de editar */
+    background-color: #aaaaaa;
 }
 
 .btn-delete:hover {
-    background-color: #650000; /* Efeito hover para o botão de deletar */
+    background-color: #650000;
 }
 
-.sp{
+.sp {
     margin-bottom: 10px;
 }
+
 button {
     display: flex;
     align-items: center;
@@ -235,20 +279,24 @@ button {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
-
 button:hover {
     background-color: #aaaaaa;
-    
 }
 
-.btn-delete {
+.voltar, .btn-cancel:hover {
     background-color: #890000;
     color: #ffffff;
 }
 
-.btn-delete:hover {
-    background-color: #650000;
+img {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.submit {
+    display: flex;
 }
 
 /* Lista de aniversariantes */
@@ -266,8 +314,8 @@ button:hover {
     justify-content: space-between;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
-    max-width: 1000px;
-    width: 100%; /* Mantém a largura do item da lista */
+    max-width: 100%;
+    width: 100%;
 }
 
 .birthday-item:hover {
@@ -292,26 +340,9 @@ button:hover {
 }
 
 .ajuste {
-    position: absolute; /* Usa posicionamento absoluto para ajustar o botão */
-    right: 50px; /* Posiciona o botão a 20px da borda direita */
-    top: 40px;   /* Posiciona o botão a 20px do topo da página */
-}
-
-.voltar, .btn-cancel:hover{
-    background-color: #890000;
-    color: #ffffff;
-}
-
-img {
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.submit{
-    display: flex;
-    
+    position: absolute;
+    right: 50px;
+    top: 40px;
 }
 
 /* Responsividade */
@@ -330,4 +361,3 @@ img {
         min-width: 0%;
     }
 }
-
