@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <link rel="stylesheet" href="../static/CSS/login.css">
+  <link rel="stylesheet" href="../static/CSS/cadastro.css">
   <title>Login</title>
 </head>
 <body>
@@ -14,28 +14,36 @@
                 
                 <form action="">
                     <div class="logo">
-                        <img src="../static/imagens/Logo.png" alt="Happy day dias preciosos" >
+                        <a href="#">
+                            <img src="../static/imagens/Logo.png" alt="Happy day dias preciosos" >
+                         </a>
                     </div>
-                    <h2>Login</h2>
+                    <h2>Cadastre-se</h2>
                     <div class="inputbox">
                         <ion-icon name="mail"></ion-icon>
                         <input type="email" required>
                         <label for="Email">Email</label>
                     </div>
                     <div class="inputbox">
+                        <ion-icon name="person-sharp"></ion-icon>
+                        <input type="text" required>
+                        <label for="Senha">Nome</label>
+                    </div>
+                    <div class="inputbox">
+                        
+                            <input type="date" required>
+                            <ion-icon name="calendar-number-sharp"></ion-icon>
+                        
+                    </div>
+                    <div class="inputbox">
                         <ion-icon name="lock-closed"></ion-icon>
                         <input type="password" required>
                         <label for="Senha">Senha</label>
                     </div>
-                    <br>
-                    <div class="forget">
-                        <label for=""><input type="checkbox">Lembrar de mim <a href="#">Forget Password</a></label>
-                      
-                    </div>
-                    <br>
-                    <button>Login</button>
+                    
+                    <button>Cadastre-se</button>
                     <div class="register">
-                        <p>Não possuo uma conta <a href="#">Register</a></p>
+                        <p>Já tenho uma conta <a href="#">Logar</a></p>
                     </div>
                 </form>
             </div>

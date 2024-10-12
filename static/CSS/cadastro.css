@@ -20,7 +20,7 @@ section {
     align-items: center;
     
     width: 100%;
-    background: url('../imagens/Login.png') no-repeat;
+    background: url('../imagens/bolo.jpg') no-repeat;
     background-position: center center;
     background-size: cover;
    
@@ -114,33 +114,24 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 1.2em;
     top: 20px;
 }
-.forget {
-    margin: -15px 0 15px;
-    font-size: 1.1em;
+.forget{
+    margin: -15px 0 15px ;
+    font-size: 1em;
     color: #fff;
     display: flex;
-    justify-content: center;  /* Alinha o conteúdo ao centro */
-    align-items: center;
+    justify-content: space-between;  
 }
 
-.forget label {
-    display: flex;
-    align-items: center; /* Alinha o checkbox com o texto verticalmente */
-    gap: 5px; /* Espaço entre o checkbox e o texto */
+.forget label input{
+    margin-right: 3px;
+    
 }
-
-.forget label input {
-    margin-right: 5px; /* Espaço entre o checkbox e o texto */
-}
-
-.forget a {
-    margin-left: 10px; /* Espaço entre o texto "Lembrar de mim" e o link */
+.forget label a{
     color: #fff;
     text-decoration: none;
     font-weight: bold;
 }
-
-.forget a:hover {
+.forget label a:hover{
     text-decoration: underline;
 }
 button{
