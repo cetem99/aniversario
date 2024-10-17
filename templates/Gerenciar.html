@@ -1,162 +1,337 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Aniversariantes</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Gerenciar.css') }}">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px; /* Diminuído o padding para reduzir a altura do header */
+            background-color: #123456;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+
+        .logo {
+            cursor: pointer;
+            height: 50px; /* Definindo uma altura fixa para a logo */
+        }
+
+
+        .l,
+        .c {
+            padding: 5px 15px; /* Diminuído o padding para os botões */
+            color: black;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease 0s;
+            font-size: 20px; /* Diminuído o tamanho da fonte */
+        }
+
+
+        .c:hover {
+            background-color: #aaa;
+        }
+
+
+        .l {
+            background-color: transparent;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+
+        .l:hover {
+            color: #aaa;
+        }
+
+
+        .bu {
+            display: flex;
+            align-items: center;
+        }
+
+
+        .foto {
+            width: 50px; /* Diminuído o tamanho da foto */
+            height: 50px; /* Diminuído o tamanho da foto */
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+
+        .hidden {
+            display: none;
+        }
+
+
+        .button-group {
+            margin-top: 10px;
+        }
+
+
+        .header-list {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+
+        .btn-toggle {
+            margin-left: 10px;
+        }
+
+
+        .birthday-list {
+            margin-left: 20px;
+        }
+
+
+        body {
+    margin-top: 100px; /* Margem no topo do body */
+}
+
+
+.container {
+    text-align: center;
+    padding-top: 50px; /* Padding para o espaço interno do contêiner */
+}
+
+
+
+
+        .form-container {
+            display: inline-block;
+            text-align: left;
+            margin: 50px auto;
+            max-width: 800px;
+        }
+
+
+        /* Estilo para o upload de arquivos */
+        .file-upload-label {
+            display: block;
+            position: relative;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 18px;
+            text-align: center;
+            width: 300px;
+            padding: 18px 0;
+            margin: auto;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px; /* Diminua o padding se necessário */
+            background-color: #123456;
+            margin-bottom: 20px; /* Adicione esta linha */
+        }
+    </style>
 </head>
+
 
 <body>
     <header>
-        <div class="navbar">
-            <div class="logo">
-                <h2>Logo</h2> <!-- Coloque sua logo aqui -->
-            </div>
-            <div class="user-info">
-                <img src="static/images/retrato-de-homem-branco-isolado" alt="logo" class="avatar">
-                <span class="username">Nome do Usuário</span>
-            </div>
+        <img class="logo" src="../static/imagens/Logo-removebg-preview 1.png" alt="Happydaylogo">
+        <div class="bu">
+            <a class="cta" href="#">
+                <button class="l">Lucas Catem Vianna
+                    <img src="../static/imagens/bolo.jpg" class="foto">
+                </button>
+            </a>
         </div>
     </header>
+
+
     <main>
         <div class="container">
-            <div class="new">
-                <button class="butnovo">Novo Aniversariante</button>
-            </div>
-            
-            <h2>Lista de Aniversariantes</h2>
-        
-            <!-- O contêiner do novo aniversariante -->
-            <div class="novo">
-                <div class="form-container">
-                    <form method="POST" action="/" enctype="multipart/form-data" class="birthday-form">
-                        <h2>Criar Aniversariante</h2>
-                        <div class="form-group">
-                            <label for="nome">Nome do aniversariante</label>
-                            <input type="text" name="nome" placeholder="Nome do aniversariante" required>
-                            <label for="data_aniversario">Data de Aniversário</label>
-                            <input type="date" name="data_aniversario" required>
-                            <label for="email">Email</label>
-                            <input type="email" name="email" placeholder="Email" required>
-                            <label for="telefone">Telefone</label>
-                            <input type="tel" name="telefone" maxlength="15" placeholder="(XX) XXXXX-XXXX" required oninput="formatPhone(this)">
-                            <label for="escolhas">Notificação</label>
-                            <select name="escolhas" required>
-                                <option value="No Dia">Somente no dia do aniversário</option>
-                                <option value="1 Dia">1 Dia antes</option>
-                                <option value="1 Semana">1 Semana antes</option>
-                                <option value="2 Semanas">2 Semanas antes</option>
-                                <option value="3 Semanas">3 Semanas antes</option>
-                                <option value="1 mes">1 Mês antes</option>
-                            </select>
-                            <label for="felicitacoes">Felicitações</label>
-                            <textarea name="felicitacoes" placeholder="Digite sua mensagem"></textarea>
-                            <div class="container">
-                                <input type="file" id="file-input" accept="image/png, image/jpeg" onchange="preview()">
-                                <label for="file-input">
-                                    <i class="fas fa-upload"></i> &nbsp; Escolher uma Foto
-                                </label>
-                                <p id="num-of-files">Nenhum arquivo escolhido</p>
-                                <div id="images"></div>
-                            </div>
-                            <div class="submit">
-                                <button type="submit" style="margin-right: 20px;">Salvar</button>
-                                <button type="button" class="btn-cancel" onclick="window.location.href='/'" >Cancelar</button>
-                            </div>
+            <div class="form-container">
+                <form id="birthdayForm" method="POST" action="/" enctype="multipart/form-data" class="birthday-form hidden">
+                    <h2>Criar Aniversariante</h2>
+                    <div class="form-group">
+                        <label for="nome">Nome do aniversariante</label>
+                        <input type="text" name="nome" placeholder="Nome do aniversariante" required>
+
+
+                        <label for="data_aniversario">Data de Aniversário</label>
+                        <input type="date" name="data_aniversario" required>
+
+
+                        <label for="email">Email</label>
+                        <input type="email" name="email" placeholder="Email" required>
+
+
+                        <label for="telefone">Telefone</label>
+                        <input type="tel" name="telefone" maxlength="15" placeholder="(XX) XXXXX-XXXX" required oninput="formatPhone(this)">
+
+
+                        <label for="escolhas">Notificação</label>
+                        <select name="escolhas" required>
+                            <option value="No Dia">Somente no dia do aniversário</option>
+                            <option value="1 Dia">1 Dia antes</option>
+                            <option value="1 Semana">1 Semana antes</option>
+                            <option value="2 Semanas">2 Semanas antes</option>
+                            <option value="3 Semanas">3 Semanas antes</option>
+                            <option value="1 mes">1 Mês antes</option>
+                        </select>
+
+
+                        <label for="felicitacoes">Felicitações</label>
+                        <textarea name="felicitacoes" placeholder="Digite sua mensagem"></textarea>
+                       
+                        <!-- Adicionando a parte de upload de fotos -->
+                        <div class="container">
+                            <input type="file" id="file-input" accept="image/png, image/jpeg" onchange="preview()" style="display: none;">
+                            <label for="file-input" class="file-upload-label">
+                                <i class="fas fa-upload"></i> &nbsp; Escolher uma Foto
+                            </label>
+                            <p id="num-of-files">Nenhum arquivo escolhido</p>
+                            <div id="images"></div>
                         </div>
-                    </form>
-                </div>
-            </div>
-        
-            <!-- Lista de aniversariantes -->
-            <div class="birthday-list">
-                {% for aniversariante in aniversariantes %}
-                <div class="birthday-item">
-                    <div class="birthday-info">
-                        <p style="font-size: 25px;"><strong>Nome:</strong> {{ aniversariante[0] }}</p>
-                        <p style="font-size: 25px;"><strong>Data de Aniversário:</strong> {{ aniversariante[1] }}</p>
-                        <p><strong>Felicitações:</strong> {{ aniversariante[5] }}</p>
-                        <p><strong>Email:</strong> {{ aniversariante[2] }}</p>
-                        <p><strong>Telefone:</strong> {{ aniversariante[3] }}</p>
-                        <p><strong>Notificação:</strong> {{ aniversariante[4] }}</p>
-                        {% if aniversariante[6] %} <!-- Se a foto existir -->
-                            <img src="{{ aniversariante[6] }}" alt="Foto de {{ aniversariante[0] }}" class="birthday-photo">
-                        {% endif %}
                     </div>
-                    <div class="action-buttons">
-                        <div class="sp">
+
+
+                    <div class="button-group">
+                        <button type="submit" name="criar" class="btn-save">
+                            <ion-icon name="checkmark-outline"></ion-icon>
+                            <span>Salvar</span>
+                        </button>
+                    </div>
+                </form>
+
+
+                <div class="header-list">
+                    <h2>Lista de Aniversariantes</h2>
+                    <button id="toggleFormBtn" class="btn-toggle">Novo aniversariante</button>
+                </div>
+
+
+                <div class="birthday-list">
+                    {% for aniversariante in aniversariantes %}
+                    <div class="birthday-item">
+                        <div class="birthday-info">
+                            <p><strong>Nome:</strong> {{ aniversariante[0] }}</p>
+                            <p><strong>Data de Aniversário:</strong> {{ aniversariante[1] }}</p>
+                            <p><strong>Email:</strong> {{ aniversariante[2] }}</p>
+                            <p><strong>Telefone:</strong> {{ aniversariante[3] }}</p>
+                            <p><strong>Notificação:</strong> {{ aniversariante[4] }}</p>
+                            <p><strong>Felicitações:</strong> {{ aniversariante[5] }}</p>
+                            {% if aniversariante[6] %}
+                            <img src="{{ url_for('static', filename=aniversariante[6]) }}" alt="Foto de {{ aniversariante[0] }}" class="birthday-photo" style="width: 100px; height: auto;">
+                            {% endif %}
+                        </div>
+
+
+                        <div class="action-buttons">
                             <form method="POST" action="/editar" class="form-edit">
                                 <input type="hidden" name="nome_atual" value="{{ aniversariante[0] }}">
                                 <button type="submit" class="btn-edit">
+                                    <ion-icon name="pencil-outline"></ion-icon>
                                     <span>Editar</span>
                                 </button>
                             </form>
-                        </div>
-                        <div class="sp">
+
+
                             <form method="POST" action="/" class="form-delete" onsubmit="return confirmDelete();">
                                 <input type="hidden" name="nome_deletar" value="{{ aniversariante[0] }}">
                                 <button type="submit" class="btn-delete">
+                                    <ion-icon name="trash-outline"></ion-icon>
                                     <span>Deletar</span>
                                 </button>
                             </form>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
-       
-        
     </main>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
     <script>
-        const form = document.querySelector('.novo');
-        const button = document.querySelector('.butnovo');
-        const fileInput = document.getElementById("file-input");
-        button.addEventListener('click', () => {
-    // Alterna entre mostrar e esconder o formulário ao clicar no botão
-    if (form.style.display === 'none' || form.style.display === '') {
-        form.style.display = 'flex';
-        button.style.visibility = "hidden"; // Corrigido aqui
-        // Adiciona a classe 'show' para iniciar a animação
-        setTimeout(() => {
-            form.classList.add('show');
-        }, 10); // Aguarda um pequeno tempo para garantir que o display: flex tenha sido aplicado
-    } else {
-        form.classList.remove('show');
-        button.style.visibility = "visible"; // Corrigido aqui
-        // Remove o formulário após a animação
-        setTimeout(() => {
-            form.style.display = 'none';
-        }, 500); // Aguarda a animação terminar antes de esconder
-    }
-});
+        function confirmDelete() {
+            return confirm("Tem certeza que deseja deletar este aniversariante?");
+        }
 
 
+        function formatPhone(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length > 10) {
+                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else if (value.length > 6) {
+                value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+            } else if (value.length > 2) {
+                value = value.replace(/(\d{2})(\d{5})/, '($1) $2-');
+            } else if (value.length > 0) {
+                value = value.replace(/(\d{2})/, '($1)');
+            }
+            input.value = value;
+        }
+
+
+        // Mostrar ou esconder o formulário
+        document.getElementById("toggleFormBtn").onclick = function() {
+            const form = document.querySelector(".birthday-form");
+            form.classList.toggle("hidden");
+        };
+
+
+        // Função para pré-visualizar as imagens
         function preview() {
-            const imageContainer = document.getElementById("images");
-            const numOfFiles = document.getElementById("num-of-files");
-            imageContainer.innerHTML = "";
-            numOfFiles.textContent = `${fileInput.files.length} Files Selected`;
+            const input = document.getElementById('file-input');
+            const imagesContainer = document.getElementById('images');
+            imagesContainer.innerHTML = ''; // Limpa imagens anteriores
+            const fileCount = input.files.length;
+            document.getElementById('num-of-files').textContent = fileCount > 0 ? fileCount + ' arquivo(s) escolhido(s)' : 'Nenhum arquivo escolhido';
 
-            for (i of fileInput.files) {
-                let reader = new FileReader();
-                let figure = document.createElement("figure");
-                let figCap = document.createElement("figcaption");
-                figCap.innerText = i.name;
-                figure.appendChild(figCap);
-                reader.onload = () => {
-                    let img = document.createElement("img");
-                    img.setAttribute("src", reader.result);
-                    figure.insertBefore(img, figCap);
-                }
-                imageContainer.appendChild(figure);
-                reader.readAsDataURL(i);
+
+            for (let i = 0; i < fileCount; i++) {
+                const file = input.files[i];
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.style.width = '100px';
+                img.style.height = 'auto';
+                imagesContainer.appendChild(img);
             }
         }
     </script>
 </body>
 
+
 </html>
+
+
+
