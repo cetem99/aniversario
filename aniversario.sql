@@ -1,5 +1,6 @@
 CREATE DATABASE IF NOT EXISTS `lembrar_aniversarios` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `lembrar_aniversarios`;
+
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 -- Host: 127.0.0.1    Database: lembrar_aniversarios
 
@@ -31,14 +32,36 @@ CREATE TABLE `aniversariantes` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+-- Table structure for table `usuario`
+
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `usuario` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(191) NOT NULL UNIQUE,
+  `nome` varchar(255) NOT NULL,
+  `data_nascimento` date NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 -- Dumping data for table `aniversariantes`
 
 LOCK TABLES `aniversariantes` WRITE;
 /*!40000 ALTER TABLE `aniversariantes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `aniversariantes` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+-- Dumping data for table `usuario`
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

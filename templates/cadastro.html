@@ -1,47 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <link rel="stylesheet" href="../static/CSS/cadastro.css">
-  <title>Login</title>
+  <link rel="stylesheet" href="../static/CSS/cadastro.css"> <!-- Mantém o link para o CSS -->
+  <title>Cadastro</title>
 </head>
 <body>
     <section>
-        <div class="back">
-        </div>
+        <div class="back"></div>
         <div class="box">
-            
             <div class="value">
-                
-                <form action="">
+                <form action="/criar_usuario" method="POST">  <!-- Rota de envio de dados -->
                     <div class="logo">
                         <a href="#">
-                            <img src="../static/imagens/Logo.png" alt="Happy day dias preciosos" >
-                         </a>
+                            <img src="../static/imagens/Logo.png" alt="Happy day dias preciosos">
+                        </a>
                     </div>
                     <h2>Cadastre-se</h2>
                     <div class="inputbox">
                         <ion-icon name="mail"></ion-icon>
-                        <input type="email" required>
+                        <input type="email" name="email" required>
                         <label for="Email">Email</label>
                     </div>
                     <div class="inputbox">
                         <ion-icon name="person-sharp"></ion-icon>
-                        <input type="text" required>
-                        <label for="Senha">Nome</label>
+                        <input type="text" name="nome" required>
+                        <label for="Nome">Nome</label>
                     </div>
                     <div class="inputbox">
-                        
-                            <input type="date" required>
-                            <ion-icon name="calendar-number-sharp"></ion-icon>
-                        
+                        <input type="date" name="data_nascimento" required>
+                        <ion-icon name="calendar-number-sharp"></ion-icon>
                     </div>
                     <div class="inputbox">
                         <ion-icon name="lock-closed"></ion-icon>
-                        <input type="password" required>
+                        <input type="password" name="senha" required>
                         <label for="Senha">Senha</label>
                     </div>
-                    
-                    <button>Cadastre-se</button>
+                    <button type="submit">Cadastre-se</button> <!-- Submete o formulário -->
                     <div class="register">
                         <p>Já tenho uma conta <a href="#">Logar</a></p>
                     </div>
