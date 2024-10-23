@@ -109,10 +109,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .inputbox ion-icon{
     position: absolute;
-    right: 8px;
+    right: -28px;
     color: #fff;
     font-size: 1.2em;
-    top: 20px;
+    top: 16px;
 }
 .forget{
     margin: -15px 0 15px ;
