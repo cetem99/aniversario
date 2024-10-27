@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 import mysql.connector
-from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_aqui'  # Chave para segurança de sessão
@@ -23,16 +22,13 @@ def cadastro():
         data_nascimento = request.form['data_nascimento']
         senha = request.form['senha']
 
-        # Criptografar a senha
-        senha_hash = generate_password_hash(senha)
-
         conexao = conecta_banco()
         cursor = conexao.cursor()
 
         try:
-            # Inserindo os dados no banco de dados
+            # Inserindo os dados no banco de dados sem criptografar a senha
             sql = "INSERT INTO usuario (nome, email, data_nascimento, senha) VALUES (%s, %s, %s, %s)"
-            valores = (nome, email, data_nascimento, senha_hash)
+            valores = (nome, email, data_nascimento, senha)
             cursor.execute(sql, valores)
             conexao.commit()
             print(f"Usuário {nome} cadastrado com sucesso!")
@@ -66,11 +62,12 @@ def login():
             cursor.execute(sql, (email,))
             usuario = cursor.fetchone()
 
-            if usuario and check_password_hash(usuario['senha'], senha):
-                # Armazenar o usuário na sessão
+            # Verificar a senha diretamente (sem hash)
+            if usuario and usuario['senha'] == senha:
                 session['usuario'] = usuario['nome']
-                return redirect(url_for('criar_aniversariante'))  # Redireciona para a página de criação de aniversariantes
+                return redirect(url_for('criar_aniversariante'))
             else:
+                print("Senha incorreta ou usuário não encontrado")  # Debug: Falha na autenticação
                 return "Email ou senha incorretos.", 401
 
         except mysql.connector.Error as err:
