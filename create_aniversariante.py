@@ -7,7 +7,7 @@ def criar_aniversariante(nome, data_aniversario, email, telefone, notificacao, f
     conexao = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='12345678',
+        password='',
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
@@ -22,7 +22,7 @@ def listar_aniversariantes():
     conexao = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='12345678',
+        password='',
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
@@ -37,7 +37,7 @@ def obter_aniversariante_por_nome(nome):
     conexao = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='12345678',
+        password='',
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
@@ -52,7 +52,7 @@ def editar_aniversariante(nome_atual, novo_nome, nova_data_aniversario, novo_ema
     conexao = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='12345678',
+        password='',
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
