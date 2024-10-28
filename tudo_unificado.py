@@ -1,19 +1,20 @@
-from flask import Flask, request, render_template, redirect, url_for, session
+from flask import Flask, redirect, url_for, render_template, request, session
 import mysql.connector
+from create_aniversariante import create_bp  # Certifique-se que o nome do arquivo está correto
 
 app = Flask(__name__)
-app.secret_key = 'sua_chave_secreta_aqui'  # Chave para segurança de sessão
+app.secret_key = 'sua_chave_secreta_aqui'  # Chave de segurança para sessão
 
 # Função para conectar ao banco de dados
 def conecta_banco():
     return mysql.connector.connect(
         host='localhost',
         user='root',
-        password='',
+        password='12345678',
         database='lembrar_aniversarios'
     )
 
-# Exibe a página de cadastro
+# Exibe a página de cadastro de usuário
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     if request.method == 'POST':
@@ -26,12 +27,10 @@ def cadastro():
         cursor = conexao.cursor()
 
         try:
-            # Inserindo os dados no banco de dados sem criptografar a senha
             sql = "INSERT INTO usuario (nome, email, data_nascimento, senha) VALUES (%s, %s, %s, %s)"
             valores = (nome, email, data_nascimento, senha)
             cursor.execute(sql, valores)
             conexao.commit()
-            print(f"Usuário {nome} cadastrado com sucesso!")
 
         except mysql.connector.Error as err:
             print(f"Erro: {err}")
@@ -42,10 +41,12 @@ def cadastro():
             cursor.close()
             conexao.close()
 
-        return redirect(url_for('login'))  # Redireciona para a página de login após o cadastro
+        return redirect(url_for('login'))
 
     return render_template('cadastro.html')
 
+# Exibe a página de login
+@app.route('/', methods=['GET', 'POST'])
 # Exibe a página de login
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -53,21 +54,25 @@ def login():
         email = request.form.get('email')
         senha = request.form.get('senha')
 
+        # Verifique se a senha não é None antes de aplicar strip
+        if senha is not None:
+            senha = senha.strip()
+        else:
+            return "Erro: Senha não pode ser vazia.", 400  # Retorna um erro 400 se a senha não for fornecida
+
         conexao = conecta_banco()
         cursor = conexao.cursor(dictionary=True)
 
         try:
-            # Buscar o usuário pelo email
             sql = "SELECT * FROM usuario WHERE email = %s"
             cursor.execute(sql, (email,))
             usuario = cursor.fetchone()
 
-            # Verificar a senha diretamente (sem hash)
             if usuario and usuario['senha'] == senha:
                 session['usuario'] = usuario['nome']
-                return redirect(url_for('criar_aniversariante'))
+                return redirect(url_for('create_bp.index'))  # Redireciona para o Blueprint
+
             else:
-                print("Senha incorreta ou usuário não encontrado")  # Debug: Falha na autenticação
                 return "Email ou senha incorretos.", 401
 
         except mysql.connector.Error as err:
@@ -80,49 +85,15 @@ def login():
 
     return render_template('login.html')
 
-# Página para criar aniversariante (somente para usuários logados)
-@app.route('/criar_aniversariante', methods=['GET', 'POST'])
-def criar_aniversariante():
-    if 'usuario' not in session:
-        return redirect(url_for('login'))  # Redireciona para o login se o usuário não estiver logado
-
-    if request.method == 'POST':
-        nome = request.form['nome']
-        data_aniversario = request.form['data_aniversario']
-        email = request.form['email']
-        telefone = request.form['telefone']
-        notificacao = request.form['escolhas']
-        felicitacao = request.form['felicitacoes']
-
-        conexao = conecta_banco()
-        cursor = conexao.cursor()
-
-        try:
-            # Inserindo o aniversariante no banco de dados
-            sql = '''INSERT INTO aniversariantes (nome, data_aniversario, email, telefone, notificacao, felicitacao)
-                     VALUES (%s, %s, %s, %s, %s, %s)'''
-            valores = (nome, data_aniversario, email, telefone, notificacao, felicitacao)
-            cursor.execute(sql, valores)
-            conexao.commit()
-
-            print(f"Aniversariante {nome} criado com sucesso!")
-            return redirect(url_for('criar_aniversariante'))  # Redireciona após a criação
-
-        except mysql.connector.Error as err:
-            print(f"Erro: {err}")
-            return "Erro ao criar aniversariante.", 500
-
-        finally:
-            cursor.close()
-            conexao.close()
-
-    return render_template('criar_aniversariante.html')
 
 # Rota para logout
 @app.route('/logout')
 def logout():
-    session.pop('usuario', None)  # Remove o usuário da sessão
-    return redirect(url_for('login'))  # Redireciona para a página de login
+    session.pop('usuario', None)
+    return redirect(url_for('login'))
+
+# Registro do Blueprint do outro arquivo
+app.register_blueprint(create_bp, url_prefix='/aniversariante')
 
 if __name__ == '__main__':
     app.run(debug=True)
