@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family= Roboto :wght@400;500;900 & display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    background-color: #051728;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box {
+    background-color: #123456;
+    height: 80%;
+    width: 70%;
+    margin: 10%;
+    border-radius: 25px;
+    padding: 75px;
+    display: flex;
+    flex-direction: column; /* Adicionado para empilhar elementos verticalmente */
+    justify-content: space-between; /* Para garantir que os elementos internos sejam distribuídos */
+    position: relative; /* Permite que elementos absolutos dentro dela sejam posicionados em relação a ela */
+    max-width: 1000px;
+    
+}
+
+
+h1{
+    font-size: 100px;
+    margin-bottom: 30px;
+}
+
+.border {
+    border-radius: 50%; /* Garante a forma circular */
+    width: 20vw; /* Ajusta a largura proporcionalmente à tela */
+    height: 20vw; /* A altura também se ajusta proporcionalmente */
+    max-width: 200px; /* Define um limite máximo para evitar que fique grande demais */
+    max-height: 200px; /* Limite máximo de altura */
+    background: linear-gradient(270deg, gray, rgb(43, 43, 43));
+    padding: 10px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    min-height: 200px;
+    
+}
+
+.person{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background-image: url(../imagens/retrato-de-homem-branco-isolado.jpg);
+    background-position: center;
+    background-size: cover;
+    overflow-wrap: break-word; /* Garante que o texto quebra se necessário */
+    word-wrap: break-word; /* Suporte para navegadores mais antigos */
+}
+
+.top{
+    padding: 0 50px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+.container {
+    width: 300px; /* Adjust as needed */
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+.in{
+  
+    width: 100%;
+}
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 25px;
+  }
+
+  input[type="text"],
+  input[type="date"]{
+    
+    width: 100%; /* Usa 100% da largura do contêiner pai */
+    max-width: 500px; /* Limita a largura máxima em telas grandes */
+    min-width: 250px; /* Define um limite mínimo em telas pequenas */
+    padding: 15px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .but {
+    position: absolute; /* Para posicionar em relação ao .box */
+    bottom: 50px; /* Distância do fundo do .box */
+    left: 0px;
+    margin: 0px 25px;
+    width: calc(100% - 40px); /* Largura total menos margens */
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    box-sizing: border-box; /* Para incluir o padding na largura total */
+    
+}
+
+button{
+    font-size: 15px;
+    height: 75px;
+    width: 125px;
+    border-radius: 35px;
+    border: rgba(138, 138, 138, 0.075) solid 1px;
+    font-weight: bold;
+}
+
+.ed{
+    background-color: #384782;
+    
+}
+
+.ed:hover {
+    background-color: #304183;
+    transform: scale(1.05); /* Aumenta o elemento em 10% */
+    transition: transform 0.3s; /* Adiciona uma transição suave */
+}
+
+.ex{
+    font-size: 15px;
+    height: 75px;
+    width: 125px;
+    background-color: darkred;
+    border-radius: 35px;
+    
+}
+
+.ex:hover{
+    background-color: rgb(122, 8, 8);
+    transform: scale(1.05); /* Aumenta o elemento em 10% */
+    transition: transform 0.3s; /* Adiciona uma transição suave */
+}
+
+
+.file-upload-label{
+    background: #ffffff;
+    color: black;
+    border-radius: 25px;
+    padding: 25px;
+    
+}
+
+
+.file-upload-label:hover{
+    background: #f0ecec;
+    color: rgb(24, 23, 23);
+}
+
+@media (max-width: 700px) {
+    .top{
+        justify-content: center;
+        align-items: center;
+        display: block;
+        padding: 0px;
+    }
+}

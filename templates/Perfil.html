@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Perfil.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box">
+        <div style="margin-bottom: 10px;">
+            <h1>Perfil</h1>
+            <form>
+                <div class="top">
+                    <div class="border"><div class="person"></div></div>
+                    <div class="in">
+                        <div style="margin: 25px 30px;">
+                            <label for="nome">Nome de usuario</label><br>
+                            <input type="text" name="nome" placeholder="Nome do usuario" required>
+                        </div>
+                        <br>
+                        <div style="margin: 25px 30px;">
+                            <label for="data">Data de aniversariante</label><br>
+                            <input type="date" name="nome" placeholder="Data do aniversario" required>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="container">
+                        <input type="file" id="file-input" accept="image/png, image/jpeg" onchange="preview()" style="display: none;">
+                        <label for="file-input" class="file-upload-label">
+                            <i class="fas fa-upload"></i> &nbsp; Escolher uma Foto
+                        </label>
+                        <p id="num-of-files">Nenhum arquivo escolhido</p>
+                        <div id="images"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="but">
+            <button class="ed">Salvar alteração</button>
+            <button class="ex">Excluir conta</button>
+        </div>
+    </div>
+    
+
+
+        <script>
+               document.getElementById("toggleFormBtn").onclick = function() {
+            const form = document.querySelector(".birthday-form");
+            form.classList.toggle("hidden");
+        };
+
+
+        // Função para pré-visualizar as imagens
+        function preview() {
+            const input = document.getElementById('file-input');
+            const imagesContainer = document.getElementById('images');
+            imagesContainer.innerHTML = ''; // Limpa imagens anteriores
+            const fileCount = input.files.length;
+            document.getElementById('num-of-files').textContent = fileCount > 0 ? fileCount + ' arquivo(s) escolhido(s)' : 'Nenhum arquivo escolhido';
+
+
+            for (let i = 0; i < fileCount; i++) {
+                const file = input.files[i];
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.style.width = '100px';
+                img.style.height = 'auto';
+                imagesContainer.appendChild(img);
+            }
+        }
+        </script>
+</body>
+</html>
