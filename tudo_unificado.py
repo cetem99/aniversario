@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template, request, session
+from flask import Flask, redirect, url_for, flash, render_template, request, session
 import mysql.connector
 from create_aniversariante import create_bp  # Certifique-se que o nome do arquivo está correto
 
@@ -10,7 +10,7 @@ def conecta_banco():
     return mysql.connector.connect(
         host='localhost',
         user='root',
-        password='',
+        password='12345678',
         database='lembrar_aniversarios'
     )
 
@@ -71,9 +71,10 @@ def login():
             if usuario and usuario['senha'] == senha:
                 session['usuario'] = usuario['nome']
                 return redirect(url_for('create_bp.index'))  # Redireciona para o Blueprint
-
             else:
-                return "Email ou senha incorretos.", 401
+                flash("Email ou senha incorretos.", "error")
+                return redirect(url_for('login'))  # Redireciona de volta para a página de login
+
 
         except mysql.connector.Error as err:
             print(f"Erro: {err}")
