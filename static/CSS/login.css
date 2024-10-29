@@ -179,3 +179,12 @@ button{
     }
 
 }
+.error {
+    color: red; /* Cor do texto */
+    background-color: #f8d7da; /* Fundo vermelho claro */
+    border: 1px solid #f5c6cb; /* Borda vermelha */
+    padding: 10px; /* Espaçamento interno */
+    margin-bottom: 15px; /* Espaçamento abaixo */
+    border-radius: 5px; /* Bordas arredondadas */
+}
+
