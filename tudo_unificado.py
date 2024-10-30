@@ -32,6 +32,9 @@ def cadastro():
             cursor.execute(sql, valores)
             conexao.commit()
 
+            # Mensagem de sucesso após cadastro
+            flash("Cadastrado com sucesso! Agora, insira seu e-mail e senha para acessar sua conta.", "success")
+
         except mysql.connector.Error as err:
             print(f"Erro: {err}")
             conexao.rollback()
@@ -47,18 +50,15 @@ def cadastro():
 
 # Exibe a página de login
 @app.route('/', methods=['GET', 'POST'])
-# Exibe a página de login
-@app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
         senha = request.form.get('senha')
 
-        # Verifique se a senha não é None antes de aplicar strip
         if senha is not None:
             senha = senha.strip()
         else:
-            return "Erro: Senha não pode ser vazia.", 400  # Retorna um erro 400 se a senha não for fornecida
+            return "Erro: Senha não pode ser vazia.", 400
 
         conexao = conecta_banco()
         cursor = conexao.cursor(dictionary=True)
@@ -70,11 +70,10 @@ def login():
 
             if usuario and usuario['senha'] == senha:
                 session['usuario'] = usuario['nome']
-                return redirect(url_for('create_bp.index'))  # Redireciona para o Blueprint
+                return redirect(url_for('create_bp.index'))
             else:
                 flash("Email ou senha incorretos.", "error")
-                return redirect(url_for('login'))  # Redireciona de volta para a página de login
-
+                return redirect(url_for('login'))
 
         except mysql.connector.Error as err:
             print(f"Erro: {err}")
