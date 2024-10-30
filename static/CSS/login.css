@@ -53,6 +53,18 @@ section::before {
     justify-content: center; /* Centraliza a logo */
     align-items: center;
 }
+section {
+    position: relative;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    
+    width: 100%;
+    background: url('../imagens/bolo.jpg') no-repeat;
+    background-position: center center;
+    background-size: cover;
+   
+}
 
 .logo img {
     max-width: 100%; /* A imagem não excede a largura do contêiner */
