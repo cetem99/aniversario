@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for, flash, render_template, request, session
 import mysql.connector
+from mysql.connector import errorcode  # Importa para capturar códigos de erro
 from create_aniversariante import create_bp  # Certifique-se que o nome do arquivo está correto
 
 app = Flask(__name__)
@@ -38,7 +39,13 @@ def cadastro():
         except mysql.connector.Error as err:
             print(f"Erro: {err}")
             conexao.rollback()
-            return "Erro ao cadastrar usuário.", 500
+
+            # Verifica se o erro é de duplicata de chave
+            if err.errno == errorcode.ER_DUP_ENTRY:
+                flash("Já existe este email cadastrado. Tente novamente com um email diferente.", "error")
+            else:
+                flash("Erro ao cadastrar usuário. Tente novamente.", "error")
+            return redirect(url_for('cadastro'))
 
         finally:
             cursor.close()
