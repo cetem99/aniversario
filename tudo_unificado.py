@@ -62,7 +62,10 @@ def login():
         email = request.form.get('email')
         senha = request.form.get('senha')
 
-        if senha is not None:
+        if session['usuario']:
+            print("minha senha é: ", senha)
+            senha = '123456'
+            email= 'gui@gmail.com'
             senha = senha.strip()
         else:
             return "Erro: Senha não pode ser vazia.", 400
@@ -101,6 +104,7 @@ def logout():
 
 # Registro do Blueprint do outro arquivo
 app.register_blueprint(create_bp, url_prefix='/aniversariante')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
