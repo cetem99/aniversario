@@ -1,19 +1,36 @@
 from flask import Blueprint, render_template, request, redirect
 import mysql.connector
 
-create_bp = Blueprint('create_bp', __name__)  # Definição correta do Blueprint
+create_bp = Blueprint('create_bp', __name__)
 
-def criar_aniversariante(nome, data_aniversario, email, telefone, notificacao, felicitacao):
+def criar_aniversariante(nome, data_aniversario, email, telefone, notificacao, felicitacao, usuario_id):
     conexao = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='',
+        password='12345678',
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
-    comando = 'INSERT INTO aniversariantes (nome, data_aniversario, email, telefone, notificacao, felicitacao) VALUES (%s, %s, %s, %s, %s, %s)'
-    valores = (nome, data_aniversario, email, telefone, notificacao, felicitacao)
+    comando = '''
+        INSERT INTO aniversariantes (nome, data_aniversario, email, telefone, notificacao, felicitacao, usuario_id) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    '''
+    valores = (nome, data_aniversario, email, telefone, notificacao, felicitacao, usuario_id)
     cursor.execute(comando, valores)
+    conexao.commit()
+    cursor.close()
+    conexao.close()
+
+def deletar_aniversariante(nome):
+    conexao = mysql.connector.connect(
+        host='localhost',
+        user='root',
+        password='12345678',
+        database='lembrar_aniversarios'
+    )
+    cursor = conexao.cursor()
+    comando = 'DELETE FROM aniversariantes WHERE nome = %s'
+    cursor.execute(comando, (nome,))
     conexao.commit()
     cursor.close()
     conexao.close()
@@ -22,7 +39,7 @@ def listar_aniversariantes():
     conexao = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='',
+        password='12345678',
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
@@ -33,26 +50,11 @@ def listar_aniversariantes():
     conexao.close()
     return resultados
 
-def obter_aniversariante_por_nome(nome):
-    conexao = mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='',
-        database='lembrar_aniversarios'
-    )
-    cursor = conexao.cursor()
-    comando = 'SELECT nome, data_aniversario, email, telefone, notificacao, felicitacao FROM aniversariantes WHERE nome = %s'
-    cursor.execute(comando, (nome,))
-    aniversariante = cursor.fetchone()
-    cursor.close()
-    conexao.close()
-    return aniversariante
-
 def editar_aniversariante(nome_atual, novo_nome, nova_data_aniversario, novo_email, novo_telefone, nova_notificacao, nova_felicitacao):
     conexao = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='',
+        password='12345678',
         database='lembrar_aniversarios'
     )
     cursor = conexao.cursor()
@@ -67,49 +69,71 @@ def editar_aniversariante(nome_atual, novo_nome, nova_data_aniversario, novo_ema
     cursor.close()
     conexao.close()
 
+def obter_aniversariante_por_nome(nome):
+    conexao = mysql.connector.connect(
+        host='localhost',
+        user='root',
+        password='12345678',
+        database='lembrar_aniversarios'
+    )
+    cursor = conexao.cursor()
+    comando = 'SELECT nome, data_aniversario, email, telefone, notificacao, felicitacao FROM aniversariantes WHERE nome = %s'
+    cursor.execute(comando, (nome,))
+    aniversariante = cursor.fetchone()
+    cursor.close()
+    conexao.close()
+    return aniversariante
+
 @create_bp.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        nome = request.form.get('nome')
-        data_aniversario = request.form.get('data_aniversario')
-        email = request.form.get('email')
-        telefone = request.form.get('telefone')
-        notificacao = request.form.get('escolhas')
-        felicitacao = request.form.get('felicitacoes')
-
-        # Verifica se algum campo é None ou vazio
-        if not all([nome, data_aniversario, email, telefone, notificacao, felicitacao]):
-            return "Erro: Todos os campos devem ser preenchidos!", 400  # Retorna um erro 400 se algum campo obrigatório não for preenchido
-
-        criar_aniversariante(nome, data_aniversario, email, telefone, notificacao, felicitacao)
-        return redirect('/')  # Redireciona para a listagem de aniversariantes
+        if 'criar' in request.form:
+            nome = request.form['nome']
+            data_aniversario = request.form['data_aniversario']  # Formato: YYYY-MM-DD
+            email = request.form['email']
+            telefone = request.form['telefone']
+            notificacao = request.form['escolhas']
+            felicitacao = request.form['felicitacoes']
+            
+            # Supondo que o usuario_id está disponível na sessão ou é enviado no formulário
+            usuario_id = request.form['usuario_id']  # Altere conforme necessário
+            
+            criar_aniversariante(nome, data_aniversario, email, telefone, notificacao, felicitacao, usuario_id)
+            return redirect('/')  # Redireciona após a criação
+        
+        elif 'nome_deletar' in request.form:
+            nome = request.form['nome_deletar']
+            deletar_aniversariante(nome)
+            return redirect('/')  # Redireciona após a exclusão
     
     aniversariantes = listar_aniversariantes()
     return render_template('Gerenciar.html', aniversariantes=aniversariantes)
 
 @create_bp.route('/editar', methods=['POST'])
 def editar():
-    nome_atual = request.form.get('nome_atual')
+    nome_atual = request.form['nome_atual']
     aniversariante = obter_aniversariante_por_nome(nome_atual)
-    
-    if aniversariante is None:
-        return "Erro: Aniversariante não encontrado!", 404  # Retorna um erro 404 se o aniversariante não for encontrado
-
     return render_template('editar.html', aniversariante=aniversariante)
 
 @create_bp.route('/salvar_edicao', methods=['POST'])
 def salvar_edicao():
-    nome_atual = request.form.get('nome_atual')
-    novo_nome = request.form.get('nome')
-    nova_data_aniversario = request.form.get('data_aniversario')
-    novo_email = request.form.get('email')
-    novo_telefone = request.form.get('telefone')
-    nova_notificacao = request.form.get('escolhas')
-    nova_felicitacao = request.form.get('felicitacoes')
+    try:
+        nome_atual = request.form['nome_atual']
+        novo_nome = request.form['nome']
+        nova_data_aniversario = request.form['data_aniversario']
+        novo_email = request.form['email']
+        novo_telefone = request.form['telefone']
+        nova_notificacao = request.form['escolhas']
+        nova_felicitacao = request.form['felicitacoes']
+        
+        # Imprimindo dados para verificação
+        print(f"Editando: {nome_atual} para {novo_nome}")
 
-    # Verifica se algum campo é None ou vazio
-    if not all([novo_nome, nova_data_aniversario, novo_email, novo_telefone, nova_notificacao, nova_felicitacao]):
-        return "Erro: Todos os campos devem ser preenchidos!", 400  # Retorna um erro 400 se algum campo obrigatório não for preenchido
+        editar_aniversariante(nome_atual, novo_nome, nova_data_aniversario, novo_email, novo_telefone, nova_notificacao, nova_felicitacao)
+        return redirect('/')  # Redireciona após salvar a edição
+    except Exception as e:
+        print(f"Erro ao salvar edição: {e}")
+        return "Houve um erro ao salvar a edição.", 500
 
-    editar_aniversariante(nome_atual, novo_nome, nova_data_aniversario, novo_email, novo_telefone, nova_notificacao, nova_felicitacao)
-    return redirect('/')
+if __name__ == '__main__':
+    create_bp.run(debug=True)
