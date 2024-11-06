@@ -1,7 +1,6 @@
 from flask import Flask, redirect, url_for, flash, render_template, request, session
 import mysql.connector
-from mysql.connector import errorcode  # Importa para capturar códigos de erro
-from create_aniversariante import create_bp  # Certifique-se que o nome do arquivo está correto
+from mysql.connector import errorcode
 
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_aqui'  # Chave de segurança para sessão
@@ -62,14 +61,6 @@ def login():
         email = request.form.get('email')
         senha = request.form.get('senha')
 
-        if session['usuario']:
-            print("minha senha é: ", senha)
-            senha = '123456'
-            email= 'gui@gmail.com'
-            senha = senha.strip()
-        else:
-            return "Erro: Senha não pode ser vazia.", 400
-
         conexao = conecta_banco()
         cursor = conexao.cursor(dictionary=True)
 
@@ -79,8 +70,8 @@ def login():
             usuario = cursor.fetchone()
 
             if usuario and usuario['senha'] == senha:
-                session['usuario'] = usuario['nome']
-                return redirect(url_for('create_bp.index'))
+                session['usuario'] = usuario['email']
+                return redirect(url_for('criar_aniversariante'))
             else:
                 flash("Email ou senha incorretos.", "error")
                 return redirect(url_for('login'))
@@ -95,16 +86,131 @@ def login():
 
     return render_template('login.html')
 
+# Rota para criar e listar aniversariantes
+@app.route('/criar_aniversariante', methods=['GET', 'POST'])
+def criar_aniversariante():
+    if 'usuario' not in session:
+        return redirect(url_for('login'))
+
+    conexao = conecta_banco()
+    cursor = conexao.cursor(dictionary=True)
+
+    aniversariantes = []
+
+    if request.method == 'POST':
+        # Criação de um novo aniversariante
+        nome_aniversariante = request.form['nome_aniversariante']
+        data_aniversario = request.form['data_aniversario']
+        telefone = request.form['telefone']
+        notificacao = request.form['notificacao']
+        felicitacao = request.form['felicitacao']
+        email_usuario = session['usuario']  # Usando o nome do usuário da sessão
+
+        try:
+            sql = """
+                INSERT INTO aniversariantes (nome, data_aniversario, email, telefone, notificacao, felicitacao)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """
+            valores = (nome_aniversariante, data_aniversario, email_usuario, telefone, notificacao, felicitacao)
+            cursor.execute(sql, valores)
+            conexao.commit()
+            flash("Aniversariante criado com sucesso!", "success")
+        except mysql.connector.Error as err:
+            print(f"Erro: {err}")
+            conexao.rollback()
+            flash("Erro ao criar aniversariante. Tente novamente.", "error")
+
+    # Consulta a lista de aniversariantes do usuário logado
+    email_usuario = session['usuario']
+    sql = "SELECT * FROM aniversariantes WHERE email = %s"
+    cursor.execute(sql, (email_usuario,))
+    aniversariantes = cursor.fetchall()
+
+    cursor.close()
+    conexao.close()
+
+    return render_template('criar_aniversariante.html', aniversariantes=aniversariantes)
+
+@app.route('/deletar_aniversariante/<int:id>', methods=['GET'])
+def deletar_aniversariante(id):
+    if 'usuario' not in session:
+        return redirect(url_for('login'))
+
+    conexao = conecta_banco()
+    cursor = conexao.cursor()
+
+    try:
+        sql = "DELETE FROM aniversariantes WHERE id = %s"
+        cursor.execute(sql, (id,))
+        conexao.commit()
+        flash("Aniversariante deletado com sucesso!", "success")
+    except mysql.connector.Error as err:
+        print(f"Erro: {err}")
+        conexao.rollback()
+        flash("Erro ao deletar aniversariante. Tente novamente.", "error")
+    finally:
+        cursor.close()
+        conexao.close()
+
+    return redirect(url_for('criar_aniversariante'))
+@app.route('/editar_aniversariante/<int:id>', methods=['GET', 'POST'])
+def editar_aniversariante(id):
+    if 'usuario' not in session:
+        return redirect(url_for('login'))
+
+    conexao = conecta_banco()
+    cursor = conexao.cursor(dictionary=True)
+
+    if request.method == 'POST':
+        # Obtendo os dados do formulário
+        nome_aniversariante = request.form['nome_aniversariante']
+        data_aniversario = request.form['data_aniversario']
+        telefone = request.form['telefone']
+        notificacao = request.form['notificacao']
+        felicitacao = request.form['felicitacao']
+
+        try:
+            # Atualizando o aniversariante no banco de dados
+            sql = """
+                UPDATE aniversariantes 
+                SET nome = %s, data_aniversario = %s, telefone = %s, notificacao = %s, felicitacao = %s
+                WHERE id = %s
+            """
+            valores = (nome_aniversariante, data_aniversario, telefone, notificacao, felicitacao, id)
+            cursor.execute(sql, valores)
+            conexao.commit()
+            flash("Aniversariante atualizado com sucesso!", "success")
+            return redirect(url_for('criar_aniversariante'))
+
+        except mysql.connector.Error as err:
+            print(f"Erro: {err}")
+            conexao.rollback()
+            flash("Erro ao editar aniversariante. Tente novamente.", "error")
+
+    # Consultando os dados do aniversariante para preencher o formulário
+    sql = "SELECT * FROM aniversariantes WHERE id = %s"
+    cursor.execute(sql, (id,))
+    aniversariante = cursor.fetchone()
+
+    cursor.close()
+    conexao.close()
+
+    if aniversariante is None:
+        flash("Aniversariante não encontrado!", "error")
+        return redirect(url_for('criar_aniversariante'))
+
+    return render_template('editar_aniversariante.html', aniversariante=aniversariante)
+@app.route('/sair')
+def sair():
+    session.pop('usuario', None)  # Remove o usuário da sessão
+    flash("Você saiu com sucesso.", "info")  # Mensagem de feedback
+    return redirect(url_for('login'))  # Redireciona para a página de login
 
 # Rota para logout
 @app.route('/logout')
 def logout():
     session.pop('usuario', None)
     return redirect(url_for('login'))
-
-# Registro do Blueprint do outro arquivo
-app.register_blueprint(create_bp, url_prefix='/aniversariante')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
