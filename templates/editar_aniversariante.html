@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Aniversariante</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Gerenciar.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Editar Aniversariante</h2>
+        
+        <form method="POST">
+            <div class="form-group">
+                <label for="nome_aniversariante">Nome</label>
+                <input type="text" class="form-control" id="nome_aniversariante" name="nome_aniversariante" value="{{ aniversariante['nome'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="data_aniversario">Data de Aniversário</label>
+                <input type="date" class="form-control" id="data_aniversario" name="data_aniversario" value="{{ aniversariante['data_aniversario'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone</label>
+                        <input type="tel" name="telefone" maxlength="15" placeholder="(XX) XXXXX-XXXX" required oninput="formatPhone(this)">
+            </div>
+            <div class="form-group">
+                <label for="escolhas">Notificação</label>
+                <select name="notificacao" class="form-control" required>
+                    <option value="No Dia" {% if aniversariante['notificacao'] == 'No Dia' %}selected{% endif %}>Somente no dia do aniversário</option>
+                    <option value="1 Dia" {% if aniversariante['notificacao'] == '1 Dia' %}selected{% endif %}>1 Dia antes</option>
+                    <option value="1 Semana" {% if aniversariante['notificacao'] == '1 Semana' %}selected{% endif %}>1 Semana antes</option>
+                    <option value="2 Semanas" {% if aniversariante['notificacao'] == '2 Semanas' %}selected{% endif %}>2 Semanas antes</option>
+                    <option value="3 Semanas" {% if aniversariante['notificacao'] == '3 Semanas' %}selected{% endif %}>3 Semanas antes</option>
+                    <option value="1 mes" {% if aniversariante['notificacao'] == '1 mes' %}selected{% endif %}>1 Mês antes</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="felicitacao">Mensagem de Felicitação</label>
+                <textarea class="form-control" id="felicitacao" name="felicitacao">{{ aniversariante['felicitacao'] }}</textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Atualizar Aniversariante</button>
+        </form>
+    </div>
+</body>
+</html>

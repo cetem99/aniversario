@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Aniversariante</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Gerenciar.css') }}">
+    <script>
+        function mostrarFormulario() {
+            const formulario = document.getElementById('formularioAniversariante');
+            formulario.style.display = formulario.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function confirmDelete() {
+            return confirm("Tem certeza que deseja deletar este aniversariante?");
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <img class="logo" src="../static/imagens/Logo.png" alt="Happydaylogo">
+        <div class="bu">
+            <a class="cta" href="#">
+                <button class="l">
+                    <img src="../static/imagens/bolo.jpg" class="foto">
+                </button>
+            </a>
+            <!-- Botão de Sair -->
+            <a href="{{ url_for('sair') }}" class="btn btn-danger ml-3">Sair</a>
+        </div>
+    </header>
+    
+    <div class="container mt-5">
+        <h2>Criar Aniversariante</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="list-group">
+                    {% for category, message in messages %}
+                        <li class="list-group-item {{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <a href="#" onclick="mostrarFormulario()" class="btn btn-primary mb-3">Adicionar Aniversariante</a>
+
+        <!-- Formulário para criar aniversariante -->
+        <div id="formularioAniversariante" style="display: none;">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="nome_aniversariante">Nome do Aniversariante</label>
+                    <input type="text" class="form-control" id="nome_aniversariante" name="nome_aniversariante" required>
+                </div>
+                <div class="form-group">
+                    <label for="data_aniversario">Data de Aniversário</label>
+                    <input type="date" class="form-control" id="data_aniversario" name="data_aniversario" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                        <input type="tel" name="telefone" maxlength="15" placeholder="(XX) XXXXX-XXXX" required oninput="formatPhone(this)">
+                </div>
+                <div class="form-group">
+                    <label for="escolhas">Notificação</label>
+                    <select name="notificacao" class="form-control" required>
+                        <option value="No Dia">Somente no dia do aniversário</option>
+                        <option value="1 Dia">1 Dia antes</option>
+                        <option value="1 Semana">1 Semana antes</option>
+                        <option value="2 Semanas">2 Semanas antes</option>
+                        <option value="3 Semanas">3 Semanas antes</option>
+                        <option value="1 mes">1 Mês antes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="felicitacao">Mensagem de Felicitação</label>
+                    <textarea class="form-control" id="felicitacao" name="felicitacao"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Criar Aniversariante</button>
+            </form>
+        </div>
+
+        <h3 class="mt-5">Lista de Aniversariantes</h3>
+<div class="birthday-list">
+    {% for aniversariante in aniversariantes %}
+    <div class="birthday-item">
+        <div class="birthday-info">
+            <p><strong>Nome:</strong> {{ aniversariante.nome }}</p>
+            <p><strong>Data de Aniversário:</strong> {{ aniversariante.data_aniversario }}</p>
+            <p><strong>Email:</strong> {{ aniversariante.email }}</p>
+            <p><strong>Telefone:</strong> {{ aniversariante.telefone }}</p>
+            <p><strong>Notificação:</strong> {{ aniversariante.notificacao }}</p>
+            <p><strong>Felicitacao:</strong> {{ aniversariante.felicitacao }}</p>
+        </div>
+        <div class="birthday-actions">
+            <!-- Botão de Editar -->
+            <a href="{{ url_for('editar_aniversariante', id=aniversariante.id) }}" class="btn btn-edit">Editar</a>
+            <!-- Botão de Deletar com confirmação -->
+            <a href="{{ url_for('deletar_aniversariante', id=aniversariante.id) }}" class="btn btn-danger" onclick="return confirmDelete()">Deletar</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
