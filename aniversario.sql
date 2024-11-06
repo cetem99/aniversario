@@ -25,7 +25,7 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
--- Table `lembrar_aniversarios`.`aniversariantes`
+-- Table `lembrar_aniversarios`.`aniversariantes` (sem a chave estrangeira)
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lembrar_aniversarios`.`aniversariantes` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -35,18 +35,18 @@ CREATE TABLE IF NOT EXISTS `lembrar_aniversarios`.`aniversariantes` (
   `telefone` VARCHAR(20) NOT NULL,
   `notificacao` VARCHAR(50) NOT NULL,
   `felicitacao` TEXT NULL DEFAULT NULL,
-  `usuario_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_aniversariantes_usuario_idx` (`usuario_id` ASC),
-  CONSTRAINT `fk_aniversariantes_usuario`
-    FOREIGN KEY (`usuario_id`)
-    REFERENCES `usuario` (`id`)
-    ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-
+-- Select para verificar os dados
 select * from usuario;
+select * from aniversariantes;
+
+
+-- Remover a coluna usuario_id da tabela aniversariantes
+
+
