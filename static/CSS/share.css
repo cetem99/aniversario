@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family= Roboto :wght@400;500;900 & display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Linden+Hill&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    
+}
+
+main{
+    background-color: #051728;
+    width: 100vw;
+    height: 100vh;
+    justify-items: center;
+    position: relative;
+}
+
+.final-img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%); /* Centraliza a imagem horizontalmente */
+    width: 150px; /* Ajuste o tamanho conforme necessário */
+    height: auto;
+    margin: 25px;
+    opacity: 0.7;
+}
+
+
+.imagen{
+    padding: 50px 0;
+    justify-items: center;
+    background-image: url(/imagens/conf.avif) ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra sutil */
+}
+
+.text{
+    text-align: center;
+}
+
+.text h1{
+    font-size: 3em;  
+    margin-bottom: 15px;
+    font-family: 'Linden Hill', serif; 
+}
+
+.text h6{
+    font-size: 1em;
+    margin: 0 25%;
+    
+}
+
+.border {
+    border-radius: 50%; /* Garante a forma circular */
+    width: 20vw; /* Ajusta a largura proporcionalmente à tela */
+    height: 20vw; /* A altura também se ajusta proporcionalmente */
+    max-width: 200px; /* Define um limite máximo para evitar que fique grande demais */
+    max-height: 200px; /* Limite máximo de altura */
+    background: linear-gradient(270deg, gray, rgb(43, 43, 43));
+    padding: 10px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    min-height: 200px;
+    box-shadow: 50px 25px 1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.person{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background-image: url(/imagens/retrato-de-homem-branco-isolado.jpg);
+    background-position: center;
+    background-size: cover;
+    overflow-wrap: break-word; /* Garante que o texto quebra se necessário */
+    word-wrap: break-word; /* Suporte para navegadores mais antigos */
+}
