@@ -361,3 +361,22 @@ img {
         min-width: 0%;
     }
 }
+
+/* Estilos específicos para o botão de compartilhar */
+.btn-share {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #25D366; /* Cor verde do WhatsApp */
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-share:hover {
+    background-color: #1DA851; /* Cor mais escura para o hover */
+    color: #fff;
+}
+

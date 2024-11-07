@@ -200,6 +200,34 @@ def editar_aniversariante(id):
         return redirect(url_for('criar_aniversariante'))
 
     return render_template('editar_aniversariante.html', aniversariante=aniversariante)
+
+@app.route('/compartilhar_aniversariante/<int:id>', methods=['GET'])
+def compartilhar_aniversariante(id):
+    if 'usuario' not in session:
+        return redirect(url_for('login'))
+
+    conexao = conecta_banco()
+    cursor = conexao.cursor(dictionary=True)
+
+    try:
+        # Busca o aniversariante pelo ID para obter o nome, mensagem e telefone
+        sql = "SELECT nome, felicitacao, telefone FROM aniversariantes WHERE id = %s"
+        cursor.execute(sql, (id,))
+        aniversariante = cursor.fetchone()
+
+        if aniversariante is None:
+            flash("Aniversariante não encontrado!", "error")
+            return redirect(url_for('criar_aniversariante'))
+
+    finally:
+        cursor.close()
+        conexao.close()
+
+    # Passa o nome, a mensagem e o telefone para o template `share.html`
+    return render_template('share.html', aniversariante=aniversariante)
+
+
+
 @app.route('/sair')
 def sair():
     session.pop('usuario', None)  # Remove o usuário da sessão

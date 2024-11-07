@@ -4,12 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/CSS/share.css">
-    <title>Happy day</title>
+    <title>Happy Day</title>
 </head>
-<style>
-    
-
-</style>
 <body>
     <main>
         <div>
@@ -22,17 +18,26 @@
             </section>
             <section>
                 <div class="text">
-                    <h1>Lucas Catem Vianna</h1>
-                    <h6>Que o seu dia seja de muita celebração, abraços apertados e sorrisos sinceros ao lado das pessoas que você mais ama. Parabéns e um feliz aniversário! 🎉🎈</h6>
+                    <h1>{{ aniversariante.nome }}</h1>
+                    <h6>{{ aniversariante.felicitacao }}</h6>
                 </div>
             </section>
         </div>
+        
+        <!-- Botão de Compartilhar no WhatsApp -->
+        <div class="share-button">
+            <a href="https://wa.me/{{ aniversariante.telefone }}?text={{ aniversariante.felicitacao | urlencode }}"
+               target="_blank"
+               class="whatsapp-button">
+                Compartilhar no WhatsApp
+            </a>
+        </div>
+        
         <!-- Imagem ao final da main -->
         <img src="/static/imagens/Logo.png" alt="Imagem no final da main" class="final-img">
     </main>
     
     <footer>
-
     </footer>
 </body>
 </html>

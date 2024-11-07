@@ -97,7 +97,11 @@
             <a href="{{ url_for('editar_aniversariante', id=aniversariante.id) }}" class="btn btn-edit">Editar</a>
             <!-- Botão de Deletar com confirmação -->
             <a href="{{ url_for('deletar_aniversariante', id=aniversariante.id) }}" class="btn btn-danger" onclick="return confirmDelete()">Deletar</a>
+            <!-- Novo Botão de Compartilhar com classe -->
+            <a href="{{ url_for('compartilhar_aniversariante', id=aniversariante.id) }}" class="btn btn-share">Compartilhar</a>
+
         </div>
+        
     </div>
     {% endfor %}
 </div>
