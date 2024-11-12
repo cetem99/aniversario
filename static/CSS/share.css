@@ -108,3 +108,23 @@ main{
 .whatsapp-button:hover {
     background-color: #1DA851;
 }
+
+.email-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.email-button a {
+    background-color: #0078D4; /* Cor azul típica do email */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.email-button a:hover {
+    background-color: #005a8a; /* Cor de hover mais escura */
+}
+

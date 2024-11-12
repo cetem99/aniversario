@@ -33,6 +33,14 @@
             </a>
         </div>
         
+        <!-- Botão de Compartilhar via E-mail -->
+        <div class="share-button email-button">
+            <a href="mailto:?subject=Feliz%20Aniversário%20para%20{{ aniversariante.nome }}&body={{ aniversariante.felicitacao | urlencode }}"
+               class="email-button">
+                Compartilhar via E-mail
+            </a>
+        </div>
+
         <!-- Imagem ao final da main -->
         <img src="/static/imagens/Logo.png" alt="Imagem no final da main" class="final-img">
     </main>
