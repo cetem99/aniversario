@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Linden+Hill&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'open sans', sans-serif;
+    color: #fff;
+}
+
+body {
+    background-color: #051728;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main {
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100vw;
+    padding-bottom: 100px;
+}
+
+.text {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(to left, rgba(5, 23, 40, 0.1) 46%, rgba(5, 23, 40, 1) 100%), url(../imagens/copo%201.svg) no-repeat right center / auto 100%;
+    width: 100%;
+    height: 500px;
+}
+
+.text1 {
+    margin: 0 0 2% 5%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.text1 button {
+    width: 200px;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #384782;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.text1 button:hover {
+    background-color: #242e53;
+    color: #e7e7e7;
+}
+
+.text1 h1 {
+    font-size: 45px;
+    text-align: center;
+}
+
+.text1 p {
+    font-size: 18px;
+}
+
+.vantagem {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: space-evenly;
+    font-size: 25px;
+    margin: 15px 100px;
+}
+
+.alinha {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.circle {
+    min-width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #384782;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 15px;
+}
+
+.no{
+    display: none;
+}
+
+#smile ion-icon {
+    font-size: 125px;
+}
+
+
+ion-icon {
+    font-size: 100px;
+}
+
+/* Estilos responsivos para telas menores */
+@media (max-width: 768px) {
+
+    .text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: none;
+        width: 100%;
+        height: 400px;
+        text-align: center;
+        background: none;
+        background-image: none;
+    }
+
+    .no {
+        display: flex;
+        height: 300px;
+        width: 100%;
+        background: linear-gradient(rgba(5, 23, 40, 0.1) 46%, rgba(5, 23, 40, 1) 100%), url(../imagens/Coponormal.jpg) no-repeat right center / auto 100%;
+        background-size: cover; /* Ajusta a imagem para cobrir a área */
+        background-position: center; /* Centraliza a imagem */
+    }
+    
+
+    .alinha {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .text1 {
+        margin: 0 0 2% 5%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .text1 h1 {
+        font-size: 35px;
+    }
+
+    .text1 p {
+        font-size: 16px;
+    }
+
+    .vantagem {
+        margin: 15px 20px;
+        font-size: 20px;
+    }
+
+    .text1 button {
+        width: 180px;
+        height: 45px;
+    }
+
+    .circle {
+        min-width: 120px;
+        height: 120px;
+        font-size: 20px;
+    }
+
+    ion-icon {
+        font-size: 80px;
+    }
+}
