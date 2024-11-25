@@ -10,9 +10,14 @@ def conecta_banco():
     return mysql.connector.connect(
         host='localhost',
         user='root',
-        password='12345678',
+        password='',
         database='lembrar_aniversarios'
     )
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 
 # Exibe a página de cadastro de usuário
 @app.route('/cadastro', methods=['GET', 'POST'])
@@ -55,7 +60,7 @@ def cadastro():
     return render_template('cadastro.html')
 
 # Exibe a página de login
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
@@ -219,12 +224,33 @@ def compartilhar_aniversariante(id):
             flash("Aniversariante não encontrado!", "error")
             return redirect(url_for('criar_aniversariante'))
 
+        # Obtemos o e-mail do usuário logado
+        email_usuario = session['usuario']
+
+        # Extrai o domínio do e-mail
+        dominio = email_usuario.split("@")[1]
+
+        # Mapeia domínios para serviços de e-mail
+        provedores = {
+            "gmail.com": "https://mail.google.com/mail/",
+            "outlook.com": "https://outlook.live.com/",
+            "yahoo.com": "https://mail.yahoo.com/",
+        }
+
+        # Verifica o provedor e ajusta o link do botão
+        if dominio in provedores:
+            link_email = provedores[dominio]
+        else:
+            # Se o provedor não for reconhecido, usa o mailto como fallback
+            link_email = f"mailto:?subject=Feliz%20Aniversário%20para%20{aniversariante['nome']}&body={aniversariante['felicitacao']}"
+
     finally:
         cursor.close()
         conexao.close()
 
-    # Passa o nome, a mensagem e o telefone para o template `share.html`
-    return render_template('share.html', aniversariante=aniversariante)
+    # Passa os dados necessários para o template `share.html`
+    return render_template('share.html', aniversariante=aniversariante, link_email=link_email)
+
 
 
 
