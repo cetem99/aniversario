@@ -10,7 +10,7 @@ def conecta_banco():
     return mysql.connector.connect(
         host='localhost',
         user='root',
-        password='',
+        password='12345678',
         database='lembrar_aniversarios'
     )
 
@@ -107,16 +107,17 @@ def criar_aniversariante():
         nome_aniversariante = request.form['nome_aniversariante']
         data_aniversario = request.form['data_aniversario']
         telefone = request.form['telefone']
+        email_aniversariante = request.form['email_aniversariante']
         notificacao = request.form['notificacao']
         felicitacao = request.form['felicitacao']
         email_usuario = session['usuario']  # Usando o nome do usuário da sessão
 
         try:
             sql = """
-                INSERT INTO aniversariantes (nome, data_aniversario, email, telefone, notificacao, felicitacao)
-                VALUES (%s, %s, %s, %s, %s, %s)
+                INSERT INTO aniversariantes (nome, data_aniversario, email_aniversariante, email, telefone, notificacao, felicitacao)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
             """
-            valores = (nome_aniversariante, data_aniversario, email_usuario, telefone, notificacao, felicitacao)
+            valores = (nome_aniversariante, data_aniversario, email_aniversariante, email_usuario,  telefone, notificacao, felicitacao)
             cursor.execute(sql, valores)
             conexao.commit()
             flash("Aniversariante criado com sucesso!", "success")
