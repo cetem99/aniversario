@@ -84,7 +84,7 @@ main{
     height: 100%;
     width: 100%;
     border-radius: 50%;
-    background-image: url(/static/imagens/retrato-de-homem-branco-isolado.jpg);
+    background-image: url(/static/imagens/bolo.jpg);
     background-position: center;
     background-size: cover;
     overflow-wrap: break-word; /* Garante que o texto quebra se necessário */
