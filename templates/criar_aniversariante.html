@@ -64,6 +64,16 @@
                         <input type="tel" name="telefone" maxlength="15" placeholder="(XX) XXXXX-XXXX" required oninput="formatPhone(this)">
                 </div>
                 <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input 
+                        type="email" 
+                        name="email_aniversariante" 
+                        id="email_aniversariante" 
+                        placeholder="Digite o e-mail do aniversariante" 
+                        required>
+                </div>
+                
+                <div class="form-group">
                     <label for="escolhas">Notificação</label>
                     <select name="notificacao" class="form-control" required>
                         <option value="No Dia">Somente no dia do aniversário</option>
@@ -89,8 +99,8 @@
         <div class="birthday-info">
             <p><strong>Nome:</strong> {{ aniversariante.nome }}</p>
             <p><strong>Data de Aniversário:</strong> {{ aniversariante.data_aniversario }}</p>
-            <p><strong>Email:</strong> {{ aniversariante.email }}</p>
             <p><strong>Telefone:</strong> {{ aniversariante.telefone }}</p>
+            <p><strong>Email:</strong> {{ aniversariante.email_aniversariante }}</p>
             <p><strong>Notificação:</strong> {{ aniversariante.notificacao }}</p>
             <p><strong>Felicitacao:</strong> {{ aniversariante.felicitacao }}</p>
         </div>
