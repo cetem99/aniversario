@@ -38,8 +38,8 @@ def calcular_data_notificacao(data_aniversario, notificacao):
 
 # Função para enviar e-mail
 def send_email(receiver_email, nome, notificacao):
-    sender_email = "guilherme.padilha@sempreceub.com"
-    password = "Gui@220803"
+    sender_email = "guiempreceub.com"
+    password = ""
     
     subject = f"Aniversário de: {nome}"
     
